@@ -93,7 +93,8 @@ h2 {
 .category-grid div,
 .job,
 .steps div,
-.form {
+.form,
+.filters {
   background: white;
   border-radius: 18px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.07);
@@ -105,14 +106,99 @@ h2 {
 }
 
 .filters {
-  background: white;
   padding: 18px;
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.07);
   display: grid;
   grid-template-columns: 1fr 220px 120px;
   gap: 12px;
   margin-bottom: 20px;
+}
+
+.job {
+  padding: 22px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.job h3 {
+  margin-bottom: 8px;
+}
+
+.job p {
+  color: #64748b;
+}
+
+.job-side {
+  text-align: right;
+}
+
+.job-side b {
+  display: block;
+  color: #16a34a;
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+button {
+  background: #39e75f;
+  color: #071936;
+  border: none;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  margin-top: 8px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.steps div {
+  padding: 24px;
+}
+
+.steps b {
+  background: #39e75f;
+  color: #071936;
+  padding: 10px 15px;
+  border-radius: 50%;
+}
+
+.form {
+  padding: 28px;
+}
+
+.form input,
+.form select,
+.filters input,
+.filters select {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
 .filters input,
 .filters select {
   margin-bottom: 0;
