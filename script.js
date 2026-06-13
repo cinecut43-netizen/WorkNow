@@ -104,6 +104,7 @@ async function loadJobsFromFirebase() {
     });
 
     renderJobs();
+    renderMyJobs();
   } catch (error) {
     console.error(error);
     jobList.innerHTML = "<p>Ошибка загрузки заданий из Firebase.</p>";
