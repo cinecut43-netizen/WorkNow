@@ -397,3 +397,33 @@ function renderMyJobs() {
     myJobsList.appendChild(item);
   });
 }
+function showTab(tabId) {
+  const tabs = document.querySelectorAll(".tab-content");
+  const buttons = document.querySelectorAll(".tab");
+
+  tabs.forEach(tab => {
+    tab.classList.remove("active-content");
+  });
+
+  buttons.forEach(button => {
+    button.classList.remove("active");
+  });
+
+  const activeTab = document.getElementById(tabId);
+
+  if (activeTab) {
+    activeTab.classList.add("active-content");
+  }
+
+  if (tabId === "profileTab" && buttons[0]) {
+    buttons[0].classList.add("active");
+  }
+
+  if (tabId === "responsesTab" && buttons[1]) {
+    buttons[1].classList.add("active");
+  }
+
+  if (tabId === "myJobsTab" && buttons[2]) {
+    buttons[2].classList.add("active");
+  }
+}
