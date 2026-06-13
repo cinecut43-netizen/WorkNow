@@ -36,7 +36,17 @@
       <input id="userName" placeholder="Ваше имя">
       <input id="userCity" placeholder="Ваш город">
       <input id="userPhone" placeholder="Телефон или Telegram">
-      <button onclick="saveProfile()">Сохранить профиль</button>
+      <button id="saveProfileBtn" onclick="saveProfile()">
+  Сохранить профиль
+</button>
+
+<button
+  id="editProfileBtn"
+  onclick="editProfile()"
+  style="display:none;"
+>
+  Редактировать профиль
+</button>
 
       <p><b>Имя:</b> <span id="savedName">Не указано</span></p>
       <p><b>Город:</b> <span id="savedCity">Не указан</span></p>
