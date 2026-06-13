@@ -27,10 +27,8 @@
 
 <section class="role-box">
   <h2>Кто вы?</h2>
-  <div class="role-buttons">
-    <button onclick="setRole('Исполнитель')">Я исполнитель</button>
-    <button onclick="setRole('Заказчик')">Я заказчик</button>
-  </div>
+  <button onclick="setRole('Исполнитель')">Я исполнитель</button>
+  <button onclick="setRole('Заказчик')">Я заказчик</button>
 </section>
 
 <section class="jobs" id="jobs">
@@ -83,6 +81,7 @@
   <div class="profile-grid">
     <div class="profile-card">
       <h3>Профиль</h3>
+
       <input id="userName" placeholder="Ваше имя">
       <input id="userPhone" placeholder="Телефон или Telegram">
       <button onclick="saveProfile()">Сохранить профиль</button>
@@ -93,6 +92,16 @@
     </div>
 
     <div class="profile-card">
+      <h3>Админ-режим</h3>
+
+      <input id="adminCode" placeholder="Введите админ-код">
+      <button onclick="enableAdmin()">Войти как админ</button>
+      <button class="delete-btn" onclick="disableAdmin()">Выйти из админки</button>
+
+      <p><b>Статус:</b> <span id="adminStatus">Обычный пользователь</span></p>
+    </div>
+
+    <div class="profile-card wide">
       <h3>Мои отклики</h3>
       <div id="responsesList">
         <p>Откликов пока нет.</p>
@@ -103,7 +112,6 @@
 
 <section class="chat">
   <h2>Демо-чат</h2>
-
   <div class="chat-box" id="chatBox"></div>
 
   <div class="chat-form">
