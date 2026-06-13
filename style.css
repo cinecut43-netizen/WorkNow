@@ -1,133 +1,243 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f3f6fb;
-  color: #0f172a;
-}
-
-.hero {
-  background: linear-gradient(135deg, #071936, #0f766e);
-  color: white;
-  padding: 25px 20px 80px;
-}
-
-nav {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 28px;
-  font-weight: 800;
-}
-
-.logo span {
-  color: #39e75f;
-}
-
-#roleBadge {
-  background: white;
+  background: #f5f8fc;
   color: #071936;
-  padding: 10px 16px;
-  border-radius: 999px;
+}
+
+.topbar {
+  height: 76px;
+  padding: 0 45px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0066ff, #39e75f);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 26px;
+}
+
+.brand-text {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.brand-text span,
+.hero-left span,
+.hero-logo span {
+  color: #22c55e;
+}
+
+.menu a {
+  margin: 0 14px;
+  text-decoration: none;
+  color: #071936;
   font-weight: bold;
 }
 
-.hero-content {
-  max-width: 850px;
-  margin: 80px auto 0;
-  text-align: center;
+.city-badge {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: bold;
 }
 
-.hero-content h1 {
-  font-size: 48px;
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 30px;
+  align-items: center;
+  padding: 70px 65px;
+  background: linear-gradient(135deg, #ffffff, #eef7ff);
+}
+
+.hero-left h1 {
+  font-size: 58px;
+  line-height: 1.05;
   margin: 0;
 }
 
-.hero-content p {
+.hero-left p {
   font-size: 20px;
-  line-height: 1.5;
+  line-height: 1.55;
+  max-width: 650px;
+}
+
+.hero-buttons {
+  margin-top: 28px;
 }
 
 .hero-buttons a {
   display: inline-block;
   margin: 6px;
   padding: 15px 24px;
-  background: #39e75f;
-  color: #071936;
+  border-radius: 12px;
   text-decoration: none;
-  border-radius: 14px;
   font-weight: bold;
 }
 
-.hero-buttons .outline {
-  background: transparent;
+.primary {
+  background: #22c55e;
   color: white;
-  border: 2px solid white;
 }
 
-section {
-  max-width: 1000px;
-  margin: 45px auto;
-  padding: 0 20px;
-}
-
-h2 {
-  font-size: 30px;
-}
-
-.role-box,
-.form,
-.filters,
-.safety,
-.account,
-.tab-content {
+.secondary {
   background: white;
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.07);
-  padding: 25px;
+  color: #16a34a;
+  border: 2px solid #22c55e;
+}
+
+.third {
+  background: white;
+  color: #0066ff;
+  border: 2px solid #0066ff;
+}
+
+.hero-logo {
+  text-align: center;
+}
+
+.big-w {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 10px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #0066ff, #00c2ff, #39e75f);
+  color: white;
+  font-size: 140px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-logo h2 {
+  font-size: 50px;
+  margin: 0;
+}
+
+.hero-logo p {
+  letter-spacing: 4px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.dashboard {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 22px;
+}
+
+.panel {
+  background: white;
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+.role-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.role-cards button {
+  background: white;
+  color: #071936;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+  display: grid;
+  gap: 5px;
+}
+
+.role-cards span {
+  font-size: 32px;
+}
+
+.safety p {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.jobs {
+  grid-row: span 2;
 }
 
 .filters {
   display: grid;
-  grid-template-columns: 1fr 180px 220px 120px;
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 150px 180px 100px;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .job {
-  background: white;
-  padding: 22px;
-  margin-bottom: 15px;
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+  display: grid;
+  grid-template-columns: 70px 1fr 120px;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.job-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: #e0f2fe;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
 }
 
 .tag {
-  background: #e0f2fe;
-  color: #0369a1;
-  padding: 6px 10px;
+  background: #dbeafe;
+  color: #0057d9;
+  padding: 5px 9px;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .city-tag {
   background: #dcfce7;
   color: #166534;
-  padding: 6px 10px;
+  padding: 5px 9px;
   border-radius: 999px;
-  font-size: 13px;
-  margin-left: 6px;
+  font-size: 12px;
+  margin-left: 5px;
 }
 
 .description {
-  color: #334155;
+  color: #475569;
 }
 
 .job-side {
@@ -137,45 +247,46 @@ h2 {
 .job-side b {
   display: block;
   color: #16a34a;
-  font-size: 26px;
-  margin-bottom: 12px;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
 button {
-  background: #39e75f;
-  color: #071936;
+  background: #0b72ff;
+  color: white;
   border: none;
   padding: 13px 18px;
   border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
-  margin: 4px;
+}
+
+.form {
+  grid-row: span 2;
 }
 
 input, select, textarea {
   width: 100%;
-  padding: 15px;
+  padding: 14px;
   margin-bottom: 12px;
   border: 1px solid #cbd5e1;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 15px;
   box-sizing: border-box;
 }
 
 textarea {
-  min-height: 100px;
+  min-height: 95px;
 }
 
-.safety-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+.form button,
+.role-cards button:hover {
+  background: #22c55e;
+  color: white;
 }
 
-.safety-grid div {
-  background: #f8fafc;
-  padding: 18px;
-  border-radius: 14px;
+.account {
+  grid-column: span 2;
 }
 
 .tabs {
@@ -186,10 +297,12 @@ textarea {
 
 .tab {
   background: #e2e8f0;
+  color: #071936;
 }
 
 .tab.active {
-  background: #39e75f;
+  background: #22c55e;
+  color: white;
 }
 
 .tab-content {
@@ -213,30 +326,44 @@ footer {
   color: #64748b;
 }
 
-@media (max-width: 700px) {
-  .hero-content h1 {
-    font-size: 34px;
-  }
-
-  .filters,
-  .safety-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .job {
-    flex-direction: column;
-  }
-
-  .job-side {
-    text-align: left;
-  }
-
-  nav {
+@media (max-width: 900px) {
+  .topbar {
+    height: auto;
+    padding: 20px;
     flex-direction: column;
     gap: 15px;
   }
 
-  .tabs {
-    flex-direction: column;
+  .menu {
+    display: grid;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .hero,
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 45px 20px;
+  }
+
+  .hero-left h1 {
+    font-size: 40px;
+  }
+
+  .filters,
+  .role-cards,
+  .job {
+    grid-template-columns: 1fr;
+  }
+
+  .account {
+    grid-column: span 1;
+  }
+
+  .job-side {
+    text-align: left;
   }
 }
