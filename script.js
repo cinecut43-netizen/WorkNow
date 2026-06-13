@@ -38,15 +38,18 @@ function createJobCard(job) {
       <span class="tag">Новое</span>
       <h3>${job.title}</h3>
       <p>${job.district}</p>
-      <p><b>Контакт:</b> ${job.contact}</p>
     </div>
     <div class="job-side">
       <b>${job.price}</b>
-      <button onclick="respondJob()">Откликнуться</button>
+      <button onclick="showContact('${job.contact}')">Откликнуться</button>
     </div>
   `;
 
   jobsSection.appendChild(card);
+}
+
+function showContact(contact) {
+  showMessage("Контакт заказчика: " + contact);
 }
 
 function respondJob() {
