@@ -8,7 +8,7 @@ const categoryFilter = document.getElementById("categoryFilter");
 let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
   {
     id: 1,
-    title: "Помочь с переездом",
+    title: "Помощь с переездом",
     price: "5000 ₽",
     city: "Москва",
     district: "м. Сокол • Сегодня 18:00",
@@ -112,17 +112,32 @@ function renderJobs() {
   filteredJobs.forEach(job => createJobCard(job));
 }
 
+function getCategoryIcon(category) {
+  const icons = {
+    "Переезд": "📦",
+    "Разгрузка": "🚚",
+    "Курьер": "🛵",
+    "Сборка мебели": "🪑",
+    "Уборка": "🧹",
+    "Мероприятия": "🎫"
+  };
+
+  return icons[category] || "⚡";
+}
+
 function createJobCard(job) {
   const card = document.createElement("div");
   card.className = "job";
 
   card.innerHTML = `
+    <div class="job-icon">${getCategoryIcon(job.category)}</div>
+
     <div>
       <span class="tag">${job.category}</span>
       <span class="city-tag">${job.city}</span>
       <h3>${job.title}</h3>
-      <p>${job.district}</p>
       <p class="description">${job.description || "Описание не указано."}</p>
+      <p>📍 ${job.district}</p>
     </div>
 
     <div class="job-side">
@@ -232,8 +247,8 @@ function showMessage(text) {
   message.style.position = "fixed";
   message.style.bottom = "20px";
   message.style.right = "20px";
-  message.style.background = "#39e75f";
-  message.style.color = "#071936";
+  message.style.background = "#22c55e";
+  message.style.color = "white";
   message.style.padding = "15px 20px";
   message.style.borderRadius = "12px";
   message.style.fontWeight = "bold";
