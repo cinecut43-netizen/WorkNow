@@ -288,6 +288,14 @@ function saveProfile() {
   profile.phone = document.getElementById("userPhone").value;
 
   localStorage.setItem("worknow_profile", JSON.stringify(profile));
+
+  document.getElementById("userName").style.display = "none";
+  document.getElementById("userCity").style.display = "none";
+  document.getElementById("userPhone").style.display = "none";
+
+  document.getElementById("saveProfileBtn").style.display = "none";
+  document.getElementById("editProfileBtn").style.display = "inline-block";
+
   renderProfile();
 
   showMessage("✅ Профиль сохранён");
@@ -303,7 +311,14 @@ function renderProfile() {
     ? profile.city
     : "Город не выбран";
 }
+if (profile.name) {
+  document.getElementById("userName").style.display = "none";
+  document.getElementById("userCity").style.display = "none";
+  document.getElementById("userPhone").style.display = "none";
 
+  document.getElementById("saveProfileBtn").style.display = "none";
+  document.getElementById("editProfileBtn").style.display = "inline-block";
+}
 function showTab(tabId) {
   const tabs = document.querySelectorAll(".tab-content");
   const buttons = document.querySelectorAll(".tab");
@@ -340,4 +355,12 @@ function showMessage(text) {
   setTimeout(() => {
     message.remove();
   }, 3000);
+}
+function editProfile() {
+  document.getElementById("userName").style.display = "block";
+  document.getElementById("userCity").style.display = "block";
+  document.getElementById("userPhone").style.display = "block";
+
+  document.getElementById("saveProfileBtn").style.display = "inline-block";
+  document.getElementById("editProfileBtn").style.display = "none";
 }
