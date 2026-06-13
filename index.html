@@ -10,28 +10,26 @@
 <header class="hero">
   <nav>
     <div class="logo">Work<span>Now</span></div>
-    <a href="#post" class="nav-btn">Разместить задание</a>
+    <div id="roleBadge">Роль не выбрана</div>
   </nav>
 
   <div class="hero-content">
     <h1>Быстрые подработки рядом с тобой</h1>
-    <p>Находи задания в Москве, откликайся и зарабатывай уже сегодня.</p>
+    <p>Находи задания, откликайся и зарабатывай уже сегодня.</p>
+
     <div class="hero-buttons">
       <a href="#jobs">Найти работу</a>
-      <a href="#post" class="outline">Дать задание</a>
+      <a href="#post" class="outline">Разместить задание</a>
+      <a href="#profile" class="outline">Личный кабинет</a>
     </div>
   </div>
 </header>
 
-<section class="categories">
-  <h2>Популярные категории</h2>
-  <div class="category-grid">
-    <div>🚚 Переезды</div>
-    <div>📦 Разгрузка</div>
-    <div>🚴 Курьер</div>
-    <div>🪑 Сборка мебели</div>
-    <div>🧹 Уборка</div>
-    <div>🎫 Мероприятия</div>
+<section class="role-box">
+  <h2>Кто вы?</h2>
+  <div class="role-buttons">
+    <button onclick="setRole('Исполнитель')">Я исполнитель</button>
+    <button onclick="setRole('Заказчик')">Я заказчик</button>
   </div>
 </section>
 
@@ -57,27 +55,6 @@
   <div id="jobList"></div>
 </section>
 
-<section class="how">
-  <h2>Как это работает</h2>
-  <div class="steps">
-    <div>
-      <b>1</b>
-      <h3>Выбери задание</h3>
-      <p>Смотри подработки рядом с собой.</p>
-    </div>
-    <div>
-      <b>2</b>
-      <h3>Откликнись</h3>
-      <p>Свяжись с заказчиком и договорись.</p>
-    </div>
-    <div>
-      <b>3</b>
-      <h3>Заработай</h3>
-      <p>Выполни работу и получи оплату.</p>
-    </div>
-  </div>
-</section>
-
 <section class="form" id="post">
   <h2>Разместить задание</h2>
 
@@ -95,9 +72,44 @@
   </select>
 
   <input placeholder="Контакт для связи">
-  <textarea placeholder="Описание задания: что нужно сделать, сколько времени, особенности"></textarea>
+  <textarea placeholder="Описание задания"></textarea>
 
   <button>Опубликовать</button>
+</section>
+
+<section class="profile" id="profile">
+  <h2>Личный кабинет</h2>
+
+  <div class="profile-grid">
+    <div class="profile-card">
+      <h3>Профиль</h3>
+      <input id="userName" placeholder="Ваше имя">
+      <input id="userPhone" placeholder="Телефон или Telegram">
+      <button onclick="saveProfile()">Сохранить профиль</button>
+
+      <p><b>Имя:</b> <span id="savedName">Не указано</span></p>
+      <p><b>Контакт:</b> <span id="savedPhone">Не указан</span></p>
+      <p><b>Роль:</b> <span id="savedRole">Не выбрана</span></p>
+    </div>
+
+    <div class="profile-card">
+      <h3>Мои отклики</h3>
+      <div id="responsesList">
+        <p>Откликов пока нет.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chat">
+  <h2>Демо-чат</h2>
+
+  <div class="chat-box" id="chatBox"></div>
+
+  <div class="chat-form">
+    <input id="chatInput" placeholder="Напишите сообщение...">
+    <button onclick="sendMessage()">Отправить</button>
+  </div>
 </section>
 
 <footer>
