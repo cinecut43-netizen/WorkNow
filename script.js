@@ -1,41 +1,56 @@
 const button = document.querySelector("button");
 const form = document.querySelector(".form");
+const jobsSection = document.getElementById("jobs");
+
+let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [];
+
+function renderJobs() {
+  jobs.forEach(job => {
+    createJobCard(job);
+  });
+}
 
 button.addEventListener("click", () => {
   const inputs = form.querySelectorAll("input");
 
-  const title = inputs[0].value;
-  const price = inputs[1].value;
-  const district = inputs[2].value;
-  const contact = inputs[3].value;
+  const job = {
+    title: inputs[0].value,
+    price: inputs[1].value,
+    district: inputs[2].value,
+    contact: inputs[3].value
+  };
 
-  if (!title || !price) {
+  if (!job.title || !job.price) {
     showMessage("Заполни название задания и оплату");
     return;
   }
 
-  const card = document.createElement("div");
-  card.className = "job";
+  jobs.push(job);
+  localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
 
-  card.innerHTML = `
-    <h3>${title}</h3>
-    <b>${price}</b>
-    <p>${district}</p>
-    <p>Контакт: ${contact}</p>
-  `;
+  createJobCard(job);
 
-  document.getElementById("jobs").appendChild(card);
-
-  inputs.forEach(input => {
-    input.value = "";
-  });
+  inputs.forEach(input => input.value = "");
 
   showMessage("✅ Задание опубликовано!");
 });
 
+function createJobCard(job) {
+  const card = document.createElement("div");
+  card.className = "job";
+
+  card.innerHTML = `
+    <h3>${job.title}</h3>
+    <b>${job.price}</b>
+    <p>${job.district}</p>
+    <p>Контакт: ${job.contact}</p>
+  `;
+
+  jobsSection.appendChild(card);
+}
+
 function showMessage(text) {
   const message = document.createElement("div");
-
   message.innerText = text;
 
   message.style.position = "fixed";
@@ -55,3 +70,5 @@ function showMessage(text) {
     message.remove();
   }, 3000);
 }
+
+renderJobs();
