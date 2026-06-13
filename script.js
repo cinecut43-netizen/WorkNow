@@ -16,19 +16,27 @@ let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
 };
 
 setTimeout(() => {
-  if (window.onAuthStateChanged) {
-    window.onAuthStateChanged(window.auth, (user) => {
-      currentUser = user;
+  window.onAuthStateChanged(window.auth, (user) => {
+  currentUser = user;
 
-      const status = document.getElementById("authStatus");
+  const status = document.getElementById("authStatus");
+  const authBox = document.querySelector(".auth-box");
 
-      if (user) {
-        status.innerText = user.email;
-      } else {
-        status.innerText = "Не выполнен вход";
-      }
-    });
+  if (user) {
+    status.innerText = user.email;
+
+    if (authBox) {
+      authBox.style.display = "none";
+    }
+
+  } else {
+    status.innerText = "Не выполнен вход";
+
+    if (authBox) {
+      authBox.style.display = "block";
+    }
   }
+});
 
   loadJobsFromFirebase();
   renderResponses();
