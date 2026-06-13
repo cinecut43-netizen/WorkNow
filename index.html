@@ -38,42 +38,6 @@
 
 <section class="jobs" id="jobs">
   <h2>Свежие задания</h2>
-
-  <div class="job">
-    <div>
-      <span class="tag">Переезд</span>
-      <h3>Помочь с переездом</h3>
-      <p>м. Сокол • Сегодня 18:00</p>
-    </div>
-    <div class="job-side">
-      <b>5000 ₽</b>
-      <button onclick="respondJob()">Откликнуться</button>
-    </div>
-  </div>
-
-  <div class="job">
-    <div>
-      <span class="tag">Разгрузка</span>
-      <h3>Разгрузить машину</h3>
-      <p>Люблино • Завтра утром</p>
-    </div>
-    <div class="job-side">
-      <b>3000 ₽</b>
-      <button onclick="respondJob()">Откликнуться</button>
-    </div>
-  </div>
-
-  <div class="job">
-    <div>
-      <span class="tag">Курьер</span>
-      <h3>Курьер на 2 часа</h3>
-      <p>Центр • Сегодня до 16:00</p>
-    </div>
-    <div class="job-side">
-      <b>1800 ₽</b>
-      <button onclick="respondJob()">Откликнуться</button>
-    </div>
-  </div>
 </section>
 
 <section class="how">
@@ -99,10 +63,22 @@
 
 <section class="form" id="post">
   <h2>Разместить задание</h2>
+
   <input placeholder="Что нужно сделать?">
   <input placeholder="Оплата, например 3000 ₽">
   <input placeholder="Район или метро">
+
+  <select>
+    <option>Переезд</option>
+    <option>Разгрузка</option>
+    <option>Курьер</option>
+    <option>Сборка мебели</option>
+    <option>Уборка</option>
+    <option>Мероприятия</option>
+  </select>
+
   <input placeholder="Контакт для связи">
+
   <button>Опубликовать</button>
 </section>
 
