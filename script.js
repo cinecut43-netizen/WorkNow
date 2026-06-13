@@ -11,7 +11,8 @@ let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
     price: "5000 ₽",
     district: "м. Сокол • Сегодня 18:00",
     category: "Переезд",
-    contact: "+7 999 000-00-00"
+    contact: "+7 999 000-00-00",
+    description: "Нужно помочь перенести коробки и пару предметов мебели. Работа примерно на 3 часа."
   },
   {
     id: 2,
@@ -19,7 +20,8 @@ let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
     price: "3000 ₽",
     district: "Люблино • Завтра утром",
     category: "Разгрузка",
-    contact: "+7 999 111-11-11"
+    contact: "+7 999 111-11-11",
+    description: "Разгрузка стройматериалов. Оплата сразу после выполнения."
   },
   {
     id: 3,
@@ -27,7 +29,69 @@ let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
     price: "1800 ₽",
     district: "Центр • Сегодня до 16:00",
     category: "Курьер",
-    contact: "@worknow_test"
+    contact: "@worknow_test",
+    description: "Нужно отвезти документы по двум адресам в центре Москвы."
+  }
+];
+
+button.addEventListener("click", () => {
+  const inputs = form.querySelectorAll("input");
+  const select = form.querySelector("select");
+  const textarea = form.querySelector("textarea");
+
+  const job = {
+    id: Date.now(),
+    title: inputs[0].value,
+    price: inputs[1].value,
+    district: inputs[2].value,
+    category: select.value,
+    contact: inputs[3].value,
+    description: textarea.value
+  };
+
+  if (!job.title || !job.price || !job.district || !job.contact) {
+    showMessage("Заполни название, оплату, район и контакт");
+    return;
+  }
+
+  jobs.unshift(job);
+  localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
+
+  renderJobs();
+
+  inputs.forEach(input => input.value = "");
+  textarea.value = "";
+  select.selectedIndex = 0;
+
+  showMessage("✅ Задание опубликовано!");
+});
+
+searchInput.addEventListener("input", renderJobs);
+categoryFilter.addEventListener("change", renderJobs);
+
+function renderJobs() {
+  const searchText = searchInput.value.toLowerCase();
+  const selectedCategory = categoryFilter.value;
+
+  jobList.innerHTML = "";
+
+  const filteredJobs = jobs.filter(job => {
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchText) ||
+      job.district.toLowerCase().includes(searchText) ||
+      (job.description || "").toLowerCase().includes(searchText);
+
+    const matchesCategory =
+      selectedCategory === "Все" || job.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  if (filteredJobs.length === 0) {
+    jobList.innerHTML = "<p>Заданий не найдено.</p>";
+    return;
+  }
+
   filteredJobs.forEach(job => createJobCard(job));
 }
 
@@ -40,6 +104,7 @@ function createJobCard(job) {
       <span class="tag">${job.category}</span>
       <h3>${job.title}</h3>
       <p>${job.district}</p>
+      <p class="description">${job.description || "Описание не указано."}</p>
     </div>
 
     <div class="job-side">
