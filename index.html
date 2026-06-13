@@ -27,4 +27,54 @@
 <section class="categories">
   <h2>Популярные категории</h2>
   <div class="category-grid">
-    <div>🚚 Переезды</div
+    <div>🚚 Переезды</div>
+    <div>📦 Разгрузка</div>
+    <div>🚴 Курьер</div>
+    <div>🪑 Сборка мебели</div>
+    <div>🧹 Уборка</div>
+    <div>🎫 Мероприятия</div>
+  </div>
+</section>
+
+<section class="jobs" id="jobs">
+  <h2>Свежие задания</h2>
+
+  <div class="filters">
+    <input id="searchInput" placeholder="Поиск задания...">
+
+    <select id="categoryFilter">
+      <option value="Все">Все категории</option>
+      <option value="Переезд">Переезд</option>
+      <option value="Разгрузка">Разгрузка</option>
+      <option value="Курьер">Курьер</option>
+      <option value="Сборка мебели">Сборка мебели</option>
+      <option value="Уборка">Уборка</option>
+      <option value="Мероприятия">Мероприятия</option>
+    </select>
+
+    <button onclick="resetFilters()">Сбросить</button>
+  </div>
+
+  <div id="jobList"></div>
+  <select>
+    <option>Переезд</option>
+    <option>Разгрузка</option>
+    <option>Курьер</option>
+    <option>Сборка мебели</option>
+    <option>Уборка</option>
+    <option>Мероприятия</option>
+  </select>
+
+  <input placeholder="Контакт для связи">
+
+  <button>Опубликовать</button>
+</section>
+
+<footer>
+  <b>WorkNow</b>
+  <p>Работа сегодня. Деньги сегодня.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
