@@ -1,11 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>WorkNow</title>
+  <meta charset="UTF-8">
+  <title>WorkNow</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>WorkNow</h1>
-    <p>Работа сегодня. Деньги сегодня.</p>
+
+<header>
+  <div class="logo">Work<span>Now</span></div>
+  <h1>Работа сегодня. Деньги сегодня.</h1>
+  <p>Быстрые подработки рядом с тобой в Москве</p>
+
+  <div class="buttons">
+    <a href="#jobs">Найти работу</a>
+    <a href="#post" class="white">Разместить задание</a>
+  </div>
+</header>
+
+<section class="cards" id="jobs">
+  <h2>Свежие задания</h2>
+
+  <div class="job">
+    <h3>Помочь с переездом</h3>
+    <b>5000 ₽</b>
+    <p>м. Сокол • Сегодня 18:00</p>
+  </div>
+
+  <div class="job">
+    <h3>Разгрузить машину</h3>
+    <b>3000 ₽</b>
+    <p>Люблино • Завтра утром</p>
+  </div>
+
+  <div class="job">
+    <h3>Курьер на 2 часа</h3>
+    <b>1800 ₽</b>
+    <p>Центр • Сегодня до 16:00</p>
+  </div>
+</section>
+
+<section class="form" id="post">
+  <h2>Разместить задание</h2>
+  <input placeholder="Что нужно сделать?">
+  <input placeholder="Оплата">
+  <input placeholder="Район или метро">
+  <input placeholder="Контакт">
+  <button>Опубликовать</button>
+</section>
+
+<footer>
+  WorkNow — быстрые подработки рядом
+</footer>
+
 </body>
 </html>
