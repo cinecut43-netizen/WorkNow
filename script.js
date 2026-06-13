@@ -1,14 +1,8 @@
-const button = document.querySelector("button");
+const button = document.querySelector(".form button");
 const form = document.querySelector(".form");
 const jobsSection = document.getElementById("jobs");
 
 let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [];
-
-function renderJobs() {
-  jobs.forEach(job => {
-    createJobCard(job);
-  });
-}
 
 button.addEventListener("click", () => {
   const inputs = form.querySelectorAll("input");
@@ -20,8 +14,8 @@ button.addEventListener("click", () => {
     contact: inputs[3].value
   };
 
-  if (!job.title || !job.price) {
-    showMessage("Заполни название задания и оплату");
+  if (!job.title || !job.price || !job.contact) {
+    showMessage("Заполни название, оплату и контакт");
     return;
   }
 
@@ -40,13 +34,23 @@ function createJobCard(job) {
   card.className = "job";
 
   card.innerHTML = `
-    <h3>${job.title}</h3>
-    <b>${job.price}</b>
-    <p>${job.district}</p>
-    <p>Контакт: ${job.contact}</p>
+    <div>
+      <span class="tag">Новое</span>
+      <h3>${job.title}</h3>
+      <p>${job.district}</p>
+      <p><b>Контакт:</b> ${job.contact}</p>
+    </div>
+    <div class="job-side">
+      <b>${job.price}</b>
+      <button onclick="respondJob()">Откликнуться</button>
+    </div>
   `;
 
   jobsSection.appendChild(card);
+}
+
+function respondJob() {
+  showMessage("Свяжитесь с заказчиком по указанному контакту");
 }
 
 function showMessage(text) {
@@ -71,4 +75,4 @@ function showMessage(text) {
   }, 3000);
 }
 
-renderJobs();
+jobs.forEach(job => createJobCard(job));
