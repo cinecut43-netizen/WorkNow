@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>WorkNow</title>
+  <title>WorkNow — подработки в Москве</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,25 +10,25 @@
 <header class="hero">
   <nav>
     <div class="logo">Work<span>Now</span></div>
-    <div id="roleBadge">Роль не выбрана</div>
+    <div id="roleBadge">Москва</div>
   </nav>
 
   <div class="hero-content">
-    <h1>Быстрые подработки рядом с тобой</h1>
-    <p>Находи задания, откликайся и зарабатывай уже сегодня.</p>
+    <h1>Найди подработку в Москве сегодня</h1>
+    <p>Разовые задания рядом с тобой: переезды, курьерские поручения, разгрузка, уборка и помощь на мероприятиях.</p>
 
     <div class="hero-buttons">
       <a href="#jobs">Найти работу</a>
       <a href="#post" class="outline">Разместить задание</a>
-      <a href="#profile" class="outline">Личный кабинет</a>
+      <a href="#profile" class="outline">Профиль</a>
     </div>
   </div>
 </header>
 
 <section class="role-box">
-  <h2>Кто вы?</h2>
-  <button onclick="setRole('Исполнитель')">Я исполнитель</button>
-  <button onclick="setRole('Заказчик')">Я заказчик</button>
+  <h2>Выберите роль</h2>
+  <button onclick="setRole('Исполнитель')">Я ищу подработку</button>
+  <button onclick="setRole('Заказчик')">Мне нужен исполнитель</button>
 </section>
 
 <section class="jobs" id="jobs">
@@ -70,17 +70,26 @@
   </select>
 
   <input placeholder="Контакт для связи">
-  <textarea placeholder="Описание задания"></textarea>
+  <textarea placeholder="Описание задания: детали, время, требования"></textarea>
 
   <button>Опубликовать</button>
 </section>
 
+<section class="safety">
+  <h2>Безопасность</h2>
+  <div class="safety-grid">
+    <div>✅ Не переводите предоплату незнакомым людям.</div>
+    <div>✅ Договаривайтесь о работе заранее и уточняйте условия.</div>
+    <div>✅ Встречайтесь в безопасных местах и сохраняйте переписку.</div>
+  </div>
+</section>
+
 <section class="profile" id="profile">
-  <h2>Личный кабинет</h2>
+  <h2>Профиль</h2>
 
   <div class="profile-grid">
     <div class="profile-card">
-      <h3>Профиль</h3>
+      <h3>Мои данные</h3>
 
       <input id="userName" placeholder="Ваше имя">
       <input id="userPhone" placeholder="Телефон или Telegram">
@@ -92,31 +101,11 @@
     </div>
 
     <div class="profile-card">
-      <h3>Админ-режим</h3>
-
-      <input id="adminCode" placeholder="Введите админ-код">
-      <button onclick="enableAdmin()">Войти как админ</button>
-      <button class="delete-btn" onclick="disableAdmin()">Выйти из админки</button>
-
-      <p><b>Статус:</b> <span id="adminStatus">Обычный пользователь</span></p>
-    </div>
-
-    <div class="profile-card wide">
       <h3>Мои отклики</h3>
       <div id="responsesList">
         <p>Откликов пока нет.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="chat">
-  <h2>Демо-чат</h2>
-  <div class="chat-box" id="chatBox"></div>
-
-  <div class="chat-form">
-    <input id="chatInput" placeholder="Напишите сообщение...">
-    <button onclick="sendMessage()">Отправить</button>
   </div>
 </section>
 
