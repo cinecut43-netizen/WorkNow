@@ -89,11 +89,6 @@ h2 {
   padding: 25px;
 }
 
-.role-buttons button {
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
 .filters {
   display: grid;
   grid-template-columns: 1fr 220px 120px;
@@ -143,12 +138,12 @@ button {
   border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
+  margin: 4px;
 }
 
 .delete-btn {
   background: #ef4444;
   color: white;
-  margin-top: 8px;
 }
 
 input, select, textarea {
@@ -169,6 +164,10 @@ textarea {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
+}
+
+.wide {
+  grid-column: span 2;
 }
 
 .chat-box {
@@ -207,6 +206,10 @@ footer {
   .profile-grid,
   .chat-form {
     grid-template-columns: 1fr;
+  }
+
+  .wide {
+    grid-column: span 1;
   }
 
   .job {
