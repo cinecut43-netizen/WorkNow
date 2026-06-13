@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="logo">Work<span>Now</span></div>
+    <h1>Работа сегодня. Деньги сегодня.</h1>
+    <p>Быстрые подработки рядом с тобой в Москве</p>
+    <div class="buttons">
+      <button onclick="scrollToJobs()">Найти задание</button>
+      <button class="secondary" onclick="scrollToForm()">Разместить задание</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="stats">
+      <div><b>24</b><span>задания сегодня</span></div>
+      <div><b>от 1500 ₽</b><span>за подработку</span></div>
+      <div><b>Москва</b><span>первый город</span></div>
+    </section>
+
+    <section id="jobs">
+      <h2>Свежие задания</h2>
+      <div id="jobList"></div>
+    </section>
+
+    <section id="createJob" class="form-box">
+      <h2>Разместить задание</h2>
+
+      <input id="title" placeholder="Что нужно сделать?" />
+      <input id="price" placeholder="Оплата, например 3000 ₽" />
+      <input id="district" placeholder="Район или метро" />
+      <input id="time" placeholder="Когда нужно?" />
+      <select id="category">
+        <option>Переезд</option>
+        <option>Разгрузка</option>
+        <option>Курьер</option>
+        <option>Сборка мебели</option>
+        <option>Уборка</option>
+        <option>Помощь на мероприятии</option>
+      </select>
+      <input id="contact" placeholder="Телефон или Telegram" />
+      <textarea id="description" placeholder="Описание задания"></textarea>
+
+      <button onclick="addJob()">Опубликовать задание</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>WorkNow — быстрые подработки рядом</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
