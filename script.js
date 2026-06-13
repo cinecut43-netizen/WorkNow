@@ -5,6 +5,7 @@ const searchInput = document.getElementById("searchInput");
 const cityFilter = document.getElementById("cityFilter");
 const categoryFilter = document.getElementById("categoryFilter");
 
+let currentUser = null;
 let jobs = [];
 let responses = JSON.parse(localStorage.getItem("worknow_responses")) || [];
 let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
@@ -13,6 +14,69 @@ let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
   phone: "",
   role: ""
 };
+
+setTimeout(() => {
+  if (window.onAuthStateChanged) {
+    window.onAuthStateChanged(window.auth, (user) => {
+      currentUser = user;
+
+      const status = document.getElementById("authStatus");
+
+      if (user) {
+        status.innerText = user.email;
+      } else {
+        status.innerText = "Не выполнен вход";
+      }
+    });
+  }
+
+  loadJobsFromFirebase();
+  renderResponses();
+  renderProfile();
+}, 1000);
+
+async function registerUser() {
+  const email = document.getElementById("authEmail").value;
+  const password = document.getElementById("authPassword").value;
+
+  if (!email || !password) {
+    showMessage("Введите email и пароль");
+    return;
+  }
+
+  try {
+    await window.createUserWithEmailAndPassword(window.auth, email, password);
+    showMessage("✅ Аккаунт создан");
+  } catch (error) {
+    showMessage("Ошибка регистрации: " + error.message);
+  }
+}
+
+async function loginUser() {
+  const email = document.getElementById("authEmail").value;
+  const password = document.getElementById("authPassword").value;
+
+  if (!email || !password) {
+    showMessage("Введите email и пароль");
+    return;
+  }
+
+  try {
+    await window.signInWithEmailAndPassword(window.auth, email, password);
+    showMessage("✅ Вход выполнен");
+  } catch (error) {
+    showMessage("Ошибка входа: " + error.message);
+  }
+}
+
+async function logoutUser() {
+  try {
+    await window.signOut(window.auth);
+    showMessage("Вы вышли из аккаунта");
+  } catch (error) {
+    showMessage("Ошибка выхода: " + error.message);
+  }
+}
 
 async function loadJobsFromFirebase() {
   jobList.innerHTML = "<p>Загружаем задания...</p>";
@@ -39,6 +103,11 @@ async function loadJobsFromFirebase() {
 }
 
 button.addEventListener("click", async () => {
+  if (!currentUser) {
+    showMessage("Сначала войдите в аккаунт");
+    return;
+  }
+
   const inputs = form.querySelectorAll("input");
   const select = form.querySelector("select");
   const textarea = form.querySelector("textarea");
@@ -51,6 +120,8 @@ button.addEventListener("click", async () => {
     category: select.value,
     contact: inputs[4].value,
     description: textarea.value,
+    userEmail: currentUser.email,
+    userId: currentUser.uid,
     createdAt: new Date().toISOString()
   };
 
@@ -146,6 +217,11 @@ function createJobCard(job) {
 }
 
 function respondToJob(id) {
+  if (!currentUser) {
+    showMessage("Сначала войдите в аккаунт");
+    return;
+  }
+
   const job = jobs.find(item => item.id === id);
 
   responses.unshift({
@@ -257,9 +333,3 @@ function showMessage(text) {
     message.remove();
   }, 3000);
 }
-
-setTimeout(() => {
-  loadJobsFromFirebase();
-  renderResponses();
-  renderProfile();
-}, 1000);
