@@ -137,6 +137,11 @@ h2 {
   color: #64748b;
 }
 
+.description {
+  color: #334155;
+  margin-top: 10px;
+}
+
 .job-side {
   text-align: right;
 }
@@ -187,6 +192,7 @@ button {
 
 .form input,
 .form select,
+.form textarea,
 .filters input,
 .filters select {
   display: block;
@@ -197,6 +203,11 @@ button {
   border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
+}
+
+.form textarea {
+  min-height: 110px;
+  resize: vertical;
 }
 
 .filters input,
