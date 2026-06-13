@@ -6,6 +6,7 @@ const categoryFilter = document.getElementById("categoryFilter");
 
 let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
   {
+    id: 1,
     title: "Помочь с переездом",
     price: "5000 ₽",
     district: "м. Сокол • Сегодня 18:00",
@@ -13,82 +14,25 @@ let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
     contact: "+7 999 000-00-00"
   },
   {
+    id: 2,
     title: "Разгрузить машину",
     price: "3000 ₽",
     district: "Люблино • Завтра утром",
     category: "Разгрузка",
     contact: "+7 999 111-11-11"
-  }
-];
-
-button.addEventListener("click", () => {
-  const inputs = form.querySelectorAll("input");
-  const select = form.querySelector("select");
-
-  const job = {
-    id: Date.now(),
-    title: inputs[0].value,
-    price: inputs[1].value,
-    district: inputs[2].value,
-    category: select.value,
-    contact: inputs[3].value
-  };
-
-  if (!job.title || !job.price || !job.district || !job.contact) {
-    showMessage("Заполни все поля");
-    return;
-  }
-
-  jobs.unshift(job);
-
-  localStorage.setItem(
-    "worknow_jobs",
-    JSON.stringify(jobs)
-  );
-
-  renderJobs();
-
-  inputs.forEach(input => input.value = "");
-  select.selectedIndex = 0;
-
-  showMessage("✅ Задание опубликовано!");
-});
-
-searchInput.addEventListener("input", renderJobs);
-categoryFilter.addEventListener("change", renderJobs);
-
-function renderJobs() {
-  const searchText = searchInput.value.toLowerCase();
-  const selectedCategory = categoryFilter.value;
-
-  jobList.innerHTML = "";
-
-  const filteredJobs = jobs.filter(job => {
-    const matchesSearch =
-      job.title.toLowerCase().includes(searchText) ||
-      job.district.toLowerCase().includes(searchText);
-
-    const matchesCategory =
-      selectedCategory === "Все" ||
-      job.category === selectedCategory;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  if (filteredJobs.length === 0) {
-    jobList.innerHTML =
-      "<p>Заданий не найдено.</p>";
-    return;
-  }
-
-  filteredJobs.forEach(job => {
-    createJobCard(job);
-  });
+  },
+  {
+    id: 3,
+    title: "Курьер на 2 часа",
+    price: "1800 ₽",
+    district: "Центр • Сегодня до 16:00",
+    category: "Курьер",
+    contact: "@worknow_test"
+  filteredJobs.forEach(job => createJobCard(job));
 }
 
 function createJobCard(job) {
   const card = document.createElement("div");
-
   card.className = "job";
 
   card.innerHTML = `
@@ -100,57 +44,33 @@ function createJobCard(job) {
 
     <div class="job-side">
       <b>${job.price}</b>
-
-      <button onclick="showContact('${job.contact}')">
-        Откликнуться
-      </button>
-
-      <button
-        style="
-          background:#ef4444;
-          color:white;
-          margin-top:8px;
-        "
-        onclick="deleteJob(${job.id})"
-      >
-        Удалить
-      </button>
+      <button onclick="showContact('${job.contact}')">Откликнуться</button>
+      <button class="delete-btn" onclick="deleteJob(${job.id})">Удалить</button>
     </div>
   `;
 
   jobList.appendChild(card);
 }
 
-function deleteJob(id) {
-  jobs = jobs.filter(job => job.id !== id);
-
-  localStorage.setItem(
-    "worknow_jobs",
-    JSON.stringify(jobs)
-  );
-
-  renderJobs();
-
-  showMessage("🗑️ Задание удалено");
+function showContact(contact) {
+  showMessage("Контакт заказчика: " + contact);
 }
 
-function showContact(contact) {
-  showMessage(
-    "Контакт заказчика: " + contact
-  );
+function deleteJob(id) {
+  jobs = jobs.filter(job => job.id !== id);
+  localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
+  renderJobs();
+  showMessage("🗑️ Задание удалено");
 }
 
 function resetFilters() {
   searchInput.value = "";
   categoryFilter.value = "Все";
-
   renderJobs();
 }
 
 function showMessage(text) {
-  const message =
-    document.createElement("div");
-
+  const message = document.createElement("div");
   message.innerText = text;
 
   message.style.position = "fixed";
@@ -161,8 +81,7 @@ function showMessage(text) {
   message.style.padding = "15px 20px";
   message.style.borderRadius = "12px";
   message.style.fontWeight = "bold";
-  message.style.boxShadow =
-    "0 8px 25px rgba(0,0,0,0.2)";
+  message.style.boxShadow = "0 8px 25px rgba(0,0,0,0.2)";
   message.style.zIndex = "9999";
 
   document.body.appendChild(message);
