@@ -1,63 +1,34 @@
 const button = document.querySelector(".form button");
 const form = document.querySelector(".form");
-const jobsSection = document.getElementById("jobs");
+const jobList = document.getElementById("jobList");
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+searchInput.addEventListener("input", renderJobs);
+categoryFilter.addEventListener("change", renderJobs);
 
-let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
-  {
-    title: "Помочь с переездом",
-    price: "5000 ₽",
-    district: "м. Сокол • Сегодня 18:00",
-    category: "Переезд",
-    contact: "+7 999 000-00-00"
-  },
-  {
-    title: "Разгрузить машину",
-    price: "3000 ₽",
-    district: "Люблино • Завтра утром",
-    category: "Разгрузка",
-    contact: "+7 999 111-11-11"
-  },
-  {
-    title: "Курьер на 2 часа",
-    price: "1800 ₽",
-    district: "Центр • Сегодня до 16:00",
-    category: "Курьер",
-    contact: "@worknow_test"
-  }
-];
+function renderJobs() {
+  const searchText = searchInput.value.toLowerCase();
+  const selectedCategory = categoryFilter.value;
 
-button.addEventListener("click", () => {
-  const inputs = form.querySelectorAll("input");
-  const select = form.querySelector("select");
+  jobList.innerHTML = "";
 
-  const job = {
-    title: inputs[0].value,
-    price: inputs[1].value,
-    district: inputs[2].value,
-    category: select.value,
-    contact: inputs[3].value
-  };
+  const filteredJobs = jobs.filter(job => {
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchText) ||
+      job.district.toLowerCase().includes(searchText);
 
-  if (!job.title || !job.price || !job.district || !job.contact) {
-    showMessage("Заполни все поля");
+    const matchesCategory =
+      selectedCategory === "Все" || job.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  if (filteredJobs.length === 0) {
+    jobList.innerHTML = "<p>Заданий не найдено.</p>";
     return;
   }
 
-  jobs.unshift(job);
-  localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
-
-  renderJobs();
-
-  inputs.forEach(input => input.value = "");
-  select.selectedIndex = 0;
-
-  showMessage("✅ Задание опубликовано!");
-});
-
-function renderJobs() {
-  jobsSection.innerHTML = "<h2>Свежие задания</h2>";
-
-  jobs.forEach(job => {
+  filteredJobs.forEach(job => {
     createJobCard(job);
   });
 }
@@ -78,11 +49,17 @@ function createJobCard(job) {
     </div>
   `;
 
-  jobsSection.appendChild(card);
+  jobList.appendChild(card);
 }
 
 function showContact(contact) {
   showMessage("Контакт заказчика: " + contact);
+}
+
+function resetFilters() {
+  searchInput.value = "";
+  categoryFilter.value = "Все";
+  renderJobs();
 }
 
 function showMessage(text) {
