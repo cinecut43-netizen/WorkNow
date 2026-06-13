@@ -33,6 +33,8 @@ let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
   role: ""
 };
 
+let isAdmin = localStorage.getItem("worknow_admin") === "true";
+
 button.addEventListener("click", () => {
   const inputs = form.querySelectorAll("input");
   const select = form.querySelector("select");
@@ -97,6 +99,10 @@ function createJobCard(job) {
   const card = document.createElement("div");
   card.className = "job";
 
+  const deleteButton = isAdmin
+    ? `<button class="delete-btn" onclick="deleteJob(${job.id})">Удалить</button>`
+    : "";
+
   card.innerHTML = `
     <div>
       <span class="tag">${job.category}</span>
@@ -108,7 +114,7 @@ function createJobCard(job) {
     <div class="job-side">
       <b>${job.price}</b>
       <button onclick="respondToJob(${job.id})">Откликнуться</button>
-      <button class="delete-btn" onclick="deleteJob(${job.id})">Удалить</button>
+      ${deleteButton}
     </div>
   `;
 
@@ -154,10 +160,44 @@ function renderResponses() {
 }
 
 function deleteJob(id) {
+  if (!isAdmin) {
+    showMessage("Удаление доступно только админу");
+    return;
+  }
+
   jobs = jobs.filter(job => job.id !== id);
   localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
+
   renderJobs();
   showMessage("🗑️ Задание удалено");
+}
+
+function enableAdmin() {
+  const code = document.getElementById("adminCode").value;
+
+  if (code === "worknow123") {
+    isAdmin = true;
+    localStorage.setItem("worknow_admin", "true");
+    renderAdminStatus();
+    renderJobs();
+    showMessage("✅ Админ-режим включён");
+  } else {
+    showMessage("Неверный админ-код");
+  }
+}
+
+function disableAdmin() {
+  isAdmin = false;
+  localStorage.setItem("worknow_admin", "false");
+  renderAdminStatus();
+  renderJobs();
+  showMessage("Админ-режим выключен");
+}
+
+function renderAdminStatus() {
+  document.getElementById("adminStatus").innerText = isAdmin
+    ? "Администратор"
+    : "Обычный пользователь";
 }
 
 function resetFilters() {
@@ -187,6 +227,7 @@ function renderProfile() {
   document.getElementById("savedName").innerText = profile.name || "Не указано";
   document.getElementById("savedPhone").innerText = profile.phone || "Не указан";
   document.getElementById("savedRole").innerText = profile.role || "Не выбрана";
+
   document.getElementById("roleBadge").innerText = profile.role
     ? "Роль: " + profile.role
     : "Роль не выбрана";
@@ -257,3 +298,4 @@ renderJobs();
 renderResponses();
 renderProfile();
 renderChat();
+renderAdminStatus();
