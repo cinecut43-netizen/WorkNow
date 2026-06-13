@@ -28,8 +28,9 @@
     <h2>Личный кабинет</h2>
 
     <div class="tabs">
-      <button class="tab active" onclick="showTab('profileTab')">Профиль</button>
-      <button class="tab" onclick="showTab('responsesTab')">Мои отклики</button>
+      <<button class="tab active" onclick="showTab('profileTab')">Профиль</button>
+<button class="tab" onclick="showTab('responsesTab')">Мои отклики</button>
+<button class="tab" onclick="showTab('myJobsTab')">Мои задания</button>
     </div>
 
     <div id="profileTab" class="tab-content active-content">
@@ -54,7 +55,11 @@
       <p><b>Роль:</b> <span id="savedRole">Не выбрана</span></p>
     </div>
 
-    <div id="responsesTab" class="tab-content">
+    <div id="myJobsTab" class="tab-content">
+  <div id="myJobsList">
+    <p>У вас пока нет заданий.</p>
+  </div>
+</div>
       <div id="responsesList">
         <p>Откликов пока нет.</p>
       </div>
