@@ -6,7 +6,7 @@ body {
 }
 
 .topbar {
-  height: 76px;
+  min-height: 76px;
   padding: 0 45px;
   background: white;
   display: flex;
@@ -143,6 +143,15 @@ body {
   text-transform: uppercase;
 }
 
+.auth-box {
+  max-width: 1180px;
+  margin: 30px auto 0;
+  padding: 26px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
 .dashboard {
   max-width: 1180px;
   margin: 0 auto;
@@ -159,7 +168,8 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.07);
 }
 
-.panel h2 {
+.panel h2,
+.auth-box h2 {
   margin-top: 0;
 }
 
@@ -259,6 +269,7 @@ button {
   border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
+  margin: 4px;
 }
 
 .form {
