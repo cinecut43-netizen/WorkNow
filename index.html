@@ -12,6 +12,17 @@
     <div class="brand-icon">W</div>
     <div class="brand-text">Work<span>Now</span></div>
   </div>
+
+  <nav class="menu">
+    <a href="#jobs">Найти работу</a>
+    <a href="#post">Разместить задание</a>
+    <a href="#safety">Безопасность</a>
+    <a href="profile.html">Личный кабинет</a>
+  </nav>
+
+  <div id="roleBadge" class="city-badge">Город не выбран</div>
+</header>
+
 <section class="auth-box">
   <h2>Вход в WorkNow</h2>
 
@@ -22,20 +33,8 @@
   <button onclick="loginUser()">Войти</button>
   <button onclick="logoutUser()">Выйти</button>
 
-  <p>
-    <b>Аккаунт:</b>
-    <span id="authStatus">Не выполнен вход</span>
-  </p>
+  <p><b>Аккаунт:</b> <span id="authStatus">Не выполнен вход</span></p>
 </section>
-  <nav class="menu">
-    <a href="#jobs">Найти работу</a>
-    <a href="#post">Разместить задание</a>
-    <a href="#safety">Безопасность</a>
-    <a href="profile.html">Личный кабинет</a>
-  </nav>
-
-  <div id="roleBadge" class="city-badge">Город не выбран</div>
-</header>
 
 <section class="hero">
   <div class="hero-left">
@@ -128,33 +127,6 @@
     <button>Опубликовать</button>
   </section>
 
-  <section class="panel account" id="account">
-    <h2>Личный кабинет</h2>
-
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('profileTab')">Профиль</button>
-      <button class="tab" onclick="showTab('responsesTab')">Мои отклики</button>
-    </div>
-
-    <div id="profileTab" class="tab-content active-content">
-      <input id="userName" placeholder="Ваше имя">
-      <input id="userCity" placeholder="Ваш город">
-      <input id="userPhone" placeholder="Телефон или Telegram">
-      <button onclick="saveProfile()">Сохранить профиль</button>
-
-      <p><b>Имя:</b> <span id="savedName">Не указано</span></p>
-      <p><b>Город:</b> <span id="savedCity">Не указан</span></p>
-      <p><b>Контакт:</b> <span id="savedPhone">Не указан</span></p>
-      <p><b>Роль:</b> <span id="savedRole">Не выбрана</span></p>
-    </div>
-
-    <div id="responsesTab" class="tab-content">
-      <div id="responsesList">
-        <p>Откликов пока нет.</p>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer>
@@ -162,9 +134,7 @@
   <p>Работа сегодня. Деньги сегодня.</p>
 </footer>
 
-<script src="script.js"></script>
-  <script type="module" src="firebase.js"></script>
+<script type="module" src="firebase.js"></script>
 <script src="script.js" defer></script>
 </body>
 </html>
-
