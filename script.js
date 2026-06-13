@@ -26,14 +26,11 @@ let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
 ];
 
 let responses = JSON.parse(localStorage.getItem("worknow_responses")) || [];
-let messages = JSON.parse(localStorage.getItem("worknow_messages")) || [];
 let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
   name: "",
   phone: "",
   role: ""
 };
-
-let isAdmin = localStorage.getItem("worknow_admin") === "true";
 
 button.addEventListener("click", () => {
   const inputs = form.querySelectorAll("input");
@@ -99,10 +96,6 @@ function createJobCard(job) {
   const card = document.createElement("div");
   card.className = "job";
 
-  const deleteButton = isAdmin
-    ? `<button class="delete-btn" onclick="deleteJob(${job.id})">Удалить</button>`
-    : "";
-
   card.innerHTML = `
     <div>
       <span class="tag">${job.category}</span>
@@ -114,7 +107,6 @@ function createJobCard(job) {
     <div class="job-side">
       <b>${job.price}</b>
       <button onclick="respondToJob(${job.id})">Откликнуться</button>
-      ${deleteButton}
     </div>
   `;
 
@@ -159,47 +151,6 @@ function renderResponses() {
   });
 }
 
-function deleteJob(id) {
-  if (!isAdmin) {
-    showMessage("Удаление доступно только админу");
-    return;
-  }
-
-  jobs = jobs.filter(job => job.id !== id);
-  localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
-
-  renderJobs();
-  showMessage("🗑️ Задание удалено");
-}
-
-function enableAdmin() {
-  const code = document.getElementById("adminCode").value;
-
-  if (code === "worknow123") {
-    isAdmin = true;
-    localStorage.setItem("worknow_admin", "true");
-    renderAdminStatus();
-    renderJobs();
-    showMessage("✅ Админ-режим включён");
-  } else {
-    showMessage("Неверный админ-код");
-  }
-}
-
-function disableAdmin() {
-  isAdmin = false;
-  localStorage.setItem("worknow_admin", "false");
-  renderAdminStatus();
-  renderJobs();
-  showMessage("Админ-режим выключен");
-}
-
-function renderAdminStatus() {
-  document.getElementById("adminStatus").innerText = isAdmin
-    ? "Администратор"
-    : "Обычный пользователь";
-}
-
 function resetFilters() {
   searchInput.value = "";
   categoryFilter.value = "Все";
@@ -230,46 +181,7 @@ function renderProfile() {
 
   document.getElementById("roleBadge").innerText = profile.role
     ? "Роль: " + profile.role
-    : "Роль не выбрана";
-}
-
-function sendMessage() {
-  const input = document.getElementById("chatInput");
-
-  if (!input.value) {
-    showMessage("Введите сообщение");
-    return;
-  }
-
-  messages.push({
-    text: input.value,
-    time: new Date().toLocaleTimeString()
-  });
-
-  localStorage.setItem("worknow_messages", JSON.stringify(messages));
-  input.value = "";
-
-  renderChat();
-}
-
-function renderChat() {
-  const chatBox = document.getElementById("chatBox");
-  chatBox.innerHTML = "";
-
-  if (messages.length === 0) {
-    chatBox.innerHTML = "<p>Сообщений пока нет.</p>";
-    return;
-  }
-
-  messages.forEach(message => {
-    const div = document.createElement("div");
-    div.className = "message";
-    div.innerHTML = `
-      <p>${message.text}</p>
-      <small>${message.time}</small>
-    `;
-    chatBox.appendChild(div);
-  });
+    : "Москва";
 }
 
 function showMessage(text) {
@@ -297,5 +209,3 @@ function showMessage(text) {
 renderJobs();
 renderResponses();
 renderProfile();
-renderChat();
-renderAdminStatus();
