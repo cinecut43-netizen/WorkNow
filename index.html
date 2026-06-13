@@ -7,115 +7,141 @@
 </head>
 <body>
 
-<header class="hero">
-  <nav>
-    <div class="logo">Work<span>Now</span></div>
-    <div id="roleBadge">Город не выбран</div>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">W</div>
+    <div class="brand-text">Work<span>Now</span></div>
+  </div>
+
+  <nav class="menu">
+    <a href="#jobs">Найти работу</a>
+    <a href="#post">Разместить задание</a>
+    <a href="#safety">Безопасность</a>
+    <a href="#account">Личный кабинет</a>
   </nav>
 
-  <div class="hero-content">
-    <h1>Найди подработку рядом с собой</h1>
+  <div id="roleBadge" class="city-badge">Город не выбран</div>
+</header>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Найди подработку <span>рядом</span> с собой</h1>
     <p>Разовые задания в любом городе: переезды, курьерские поручения, разгрузка, уборка и помощь на мероприятиях.</p>
 
     <div class="hero-buttons">
-      <a href="#jobs">Найти работу</a>
-      <a href="#post" class="outline">Разместить задание</a>
-      <a href="#account" class="outline">Личный кабинет</a>
+      <a href="#jobs" class="primary">Найти работу</a>
+      <a href="#post" class="secondary">Разместить задание</a>
+      <a href="#account" class="third">Личный кабинет</a>
     </div>
   </div>
-</header>
 
-<section class="role-box">
-  <h2>Выберите роль</h2>
-  <button onclick="setRole('Исполнитель')">Я ищу подработку</button>
-  <button onclick="setRole('Заказчик')">Мне нужен исполнитель</button>
+  <div class="hero-logo">
+    <div class="big-w">W</div>
+    <h2>Work<span>Now</span></h2>
+    <p>Работа сегодня. Заработок сейчас.</p>
+  </div>
 </section>
 
-<section class="jobs" id="jobs">
-  <h2>Свежие задания</h2>
+<main class="dashboard">
 
-  <div class="filters">
-    <input id="searchInput" placeholder="Поиск задания...">
-    <input id="cityFilter" placeholder="Город">
+  <section class="panel role-box">
+    <h2>Выберите роль</h2>
+    <div class="role-cards">
+      <button onclick="setRole('Исполнитель')">
+        <span>👤</span>
+        <b>Я ищу подработку</b>
+        <small>Исполнитель</small>
+      </button>
 
-    <select id="categoryFilter">
-      <option value="Все">Все категории</option>
-      <option value="Переезд">Переезд</option>
-      <option value="Разгрузка">Разгрузка</option>
-      <option value="Курьер">Курьер</option>
-      <option value="Сборка мебели">Сборка мебели</option>
-      <option value="Уборка">Уборка</option>
-      <option value="Мероприятия">Мероприятия</option>
+      <button onclick="setRole('Заказчик')">
+        <span>💼</span>
+        <b>Мне нужен исполнитель</b>
+        <small>Заказчик</small>
+      </button>
+    </div>
+  </section>
+
+  <section class="panel safety" id="safety">
+    <h2>Безопасность</h2>
+    <p>✅ Не переводите предоплату незнакомым людям.</p>
+    <p>✅ Уточняйте условия, время и оплату заранее.</p>
+    <p>✅ Сохраняйте переписку и встречайтесь в безопасных местах.</p>
+  </section>
+
+  <section class="panel jobs" id="jobs">
+    <h2>Свежие задания</h2>
+
+    <div class="filters">
+      <input id="searchInput" placeholder="Поиск задания...">
+      <input id="cityFilter" placeholder="Город">
+
+      <select id="categoryFilter">
+        <option value="Все">Все категории</option>
+        <option value="Переезд">Переезд</option>
+        <option value="Разгрузка">Разгрузка</option>
+        <option value="Курьер">Курьер</option>
+        <option value="Сборка мебели">Сборка мебели</option>
+        <option value="Уборка">Уборка</option>
+        <option value="Мероприятия">Мероприятия</option>
+      </select>
+
+      <button onclick="resetFilters()">Сбросить</button>
+    </div>
+
+    <div id="jobList"></div>
+  </section>
+
+  <section class="panel form" id="post">
+    <h2>Разместить задание</h2>
+
+    <input placeholder="Что нужно сделать?">
+    <input placeholder="Оплата, например 3000 ₽">
+    <input placeholder="Город">
+    <input placeholder="Район или метро">
+
+    <select>
+      <option>Переезд</option>
+      <option>Разгрузка</option>
+      <option>Курьер</option>
+      <option>Сборка мебели</option>
+      <option>Уборка</option>
+      <option>Мероприятия</option>
     </select>
 
-    <button onclick="resetFilters()">Сбросить</button>
-  </div>
+    <input placeholder="Контакт для связи">
+    <textarea placeholder="Описание задания: детали, время, требования"></textarea>
 
-  <div id="jobList"></div>
-</section>
+    <button>Опубликовать</button>
+  </section>
 
-<section class="form" id="post">
-  <h2>Разместить задание</h2>
+  <section class="panel account" id="account">
+    <h2>Личный кабинет</h2>
 
-  <input placeholder="Что нужно сделать?">
-  <input placeholder="Оплата, например 3000 ₽">
-  <input placeholder="Город">
-  <input placeholder="Район или метро">
-
-  <select>
-    <option>Переезд</option>
-    <option>Разгрузка</option>
-    <option>Курьер</option>
-    <option>Сборка мебели</option>
-    <option>Уборка</option>
-    <option>Мероприятия</option>
-  </select>
-
-  <input placeholder="Контакт для связи">
-  <textarea placeholder="Описание задания: детали, время, требования"></textarea>
-
-  <button>Опубликовать</button>
-</section>
-
-<section class="safety">
-  <h2>Безопасность</h2>
-  <div class="safety-grid">
-    <div>✅ Не переводите предоплату незнакомым людям.</div>
-    <div>✅ Уточняйте условия, время и оплату заранее.</div>
-    <div>✅ Сохраняйте переписку и встречайтесь в безопасных местах.</div>
-  </div>
-</section>
-
-<section class="account" id="account">
-  <h2>Личный кабинет</h2>
-
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('profileTab')">Профиль</button>
-    <button class="tab" onclick="showTab('responsesTab')">Мои отклики</button>
-  </div>
-
-  <div id="profileTab" class="tab-content active-content">
-    <h3>Мои данные</h3>
-
-    <input id="userName" placeholder="Ваше имя">
-    <input id="userCity" placeholder="Ваш город">
-    <input id="userPhone" placeholder="Телефон или Telegram">
-
-    <button onclick="saveProfile()">Сохранить профиль</button>
-
-    <p><b>Имя:</b> <span id="savedName">Не указано</span></p>
-    <p><b>Город:</b> <span id="savedCity">Не указан</span></p>
-    <p><b>Контакт:</b> <span id="savedPhone">Не указан</span></p>
-    <p><b>Роль:</b> <span id="savedRole">Не выбрана</span></p>
-  </div>
-
-  <div id="responsesTab" class="tab-content">
-    <h3>Мои отклики</h3>
-    <div id="responsesList">
-      <p>Откликов пока нет.</p>
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('profileTab')">Профиль</button>
+      <button class="tab" onclick="showTab('responsesTab')">Мои отклики</button>
     </div>
-  </div>
-</section>
+
+    <div id="profileTab" class="tab-content active-content">
+      <input id="userName" placeholder="Ваше имя">
+      <input id="userCity" placeholder="Ваш город">
+      <input id="userPhone" placeholder="Телефон или Telegram">
+      <button onclick="saveProfile()">Сохранить профиль</button>
+
+      <p><b>Имя:</b> <span id="savedName">Не указано</span></p>
+      <p><b>Город:</b> <span id="savedCity">Не указан</span></p>
+      <p><b>Контакт:</b> <span id="savedPhone">Не указан</span></p>
+      <p><b>Роль:</b> <span id="savedRole">Не выбрана</span></p>
+    </div>
+
+    <div id="responsesTab" class="tab-content">
+      <div id="responsesList">
+        <p>Откликов пока нет.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer>
   <b>WorkNow</b>
