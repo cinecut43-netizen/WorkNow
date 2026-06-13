@@ -1,5 +1,107 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 100px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f6fb;
+  color: #0f172a;
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+  background: linear-gradient(135deg, #071936, #0f766e);
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+.logo span {
+  color: #39e75f;
+}
+
+h1 {
+  font-size: 42px;
+  margin: 0;
+}
+
+header p {
+  font-size: 20px;
+}
+
+.buttons {
+  margin-top: 30px;
+}
+
+.buttons a {
+  display: inline-block;
+  margin: 6px;
+  padding: 14px 22px;
+  background: #39e75f;
+  color: #071936;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.buttons .white {
+  background: white;
+}
+
+section {
+  max-width: 900px;
+  margin: 35px auto;
+  padding: 0 20px;
+}
+
+.job {
+  background: white;
+  padding: 22px;
+  border-radius: 16px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+}
+
+.job h3 {
+  margin: 0 0 10px;
+}
+
+.job b {
+  color: #16a34a;
+  font-size: 24px;
+}
+
+.form {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  background: #39e75f;
+  border: none;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
 }
