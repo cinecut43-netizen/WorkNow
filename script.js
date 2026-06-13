@@ -364,3 +364,35 @@ function editProfile() {
   document.getElementById("saveProfileBtn").style.display = "inline-block";
   document.getElementById("editProfileBtn").style.display = "none";
 }
+function renderMyJobs() {
+  const myJobsList = document.getElementById("myJobsList");
+
+  if (!myJobsList) return;
+
+  if (!currentUser) {
+    myJobsList.innerHTML = "<p>Войдите в аккаунт, чтобы увидеть свои задания.</p>";
+    return;
+  }
+
+  const myJobs = jobs.filter(job => job.userId === currentUser.uid);
+
+  if (myJobs.length === 0) {
+    myJobsList.innerHTML = "<p>У вас пока нет заданий.</p>";
+    return;
+  }
+
+  myJobsList.innerHTML = "";
+
+  myJobs.forEach(job => {
+    const item = document.createElement("div");
+    item.className = "message";
+
+    item.innerHTML = `
+      <b>${job.title}</b>
+      <p>${job.price} • ${job.city}</p>
+      <p>${job.description || "Описание не указано."}</p>
+    `;
+
+    myJobsList.appendChild(item);
+  });
+}
