@@ -12,7 +12,21 @@
     <div class="brand-icon">W</div>
     <div class="brand-text">Work<span>Now</span></div>
   </div>
+<section class="auth-box">
+  <h2>Вход в WorkNow</h2>
 
+  <input id="authEmail" type="email" placeholder="Email">
+  <input id="authPassword" type="password" placeholder="Пароль">
+
+  <button onclick="registerUser()">Зарегистрироваться</button>
+  <button onclick="loginUser()">Войти</button>
+  <button onclick="logoutUser()">Выйти</button>
+
+  <p>
+    <b>Аккаунт:</b>
+    <span id="authStatus">Не выполнен вход</span>
+  </p>
+</section>
   <nav class="menu">
     <a href="#jobs">Найти работу</a>
     <a href="#post">Разместить задание</a>
