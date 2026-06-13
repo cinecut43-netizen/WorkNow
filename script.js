@@ -12,27 +12,26 @@ let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
     district: "м. Сокол • Сегодня 18:00",
     category: "Переезд",
     contact: "+7 999 000-00-00",
-    description: "Нужно помочь перенести коробки и пару предметов мебели. Работа примерно на 3 часа."
+    description: "Нужно помочь перенести коробки. Работа примерно на 3 часа."
   },
   {
     id: 2,
-    title: "Разгрузить машину",
-    price: "3000 ₽",
-    district: "Люблино • Завтра утром",
-    category: "Разгрузка",
-    contact: "+7 999 111-11-11",
-    description: "Разгрузка стройматериалов. Оплата сразу после выполнения."
-  },
-  {
-    id: 3,
     title: "Курьер на 2 часа",
     price: "1800 ₽",
     district: "Центр • Сегодня до 16:00",
     category: "Курьер",
     contact: "@worknow_test",
-    description: "Нужно отвезти документы по двум адресам в центре Москвы."
+    description: "Нужно отвезти документы по двум адресам."
   }
 ];
+
+let responses = JSON.parse(localStorage.getItem("worknow_responses")) || [];
+let messages = JSON.parse(localStorage.getItem("worknow_messages")) || [];
+let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
+  name: "",
+  phone: "",
+  role: ""
+};
 
 button.addEventListener("click", () => {
   const inputs = form.querySelectorAll("input");
@@ -57,12 +56,11 @@ button.addEventListener("click", () => {
   jobs.unshift(job);
   localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
 
-  renderJobs();
-
   inputs.forEach(input => input.value = "");
   textarea.value = "";
   select.selectedIndex = 0;
 
+  renderJobs();
   showMessage("✅ Задание опубликовано!");
 });
 
@@ -109,7 +107,7 @@ function createJobCard(job) {
 
     <div class="job-side">
       <b>${job.price}</b>
-      <button onclick="showContact('${job.contact}')">Откликнуться</button>
+      <button onclick="respondToJob(${job.id})">Откликнуться</button>
       <button class="delete-btn" onclick="deleteJob(${job.id})">Удалить</button>
     </div>
   `;
@@ -117,8 +115,42 @@ function createJobCard(job) {
   jobList.appendChild(card);
 }
 
-function showContact(contact) {
-  showMessage("Контакт заказчика: " + contact);
+function respondToJob(id) {
+  const job = jobs.find(item => item.id === id);
+
+  responses.unshift({
+    id: Date.now(),
+    title: job.title,
+    price: job.price,
+    contact: job.contact
+  });
+
+  localStorage.setItem("worknow_responses", JSON.stringify(responses));
+  renderResponses();
+
+  showMessage("✅ Отклик отправлен. Контакт: " + job.contact);
+}
+
+function renderResponses() {
+  const responsesList = document.getElementById("responsesList");
+
+  if (responses.length === 0) {
+    responsesList.innerHTML = "<p>Откликов пока нет.</p>";
+    return;
+  }
+
+  responsesList.innerHTML = "";
+
+  responses.forEach(response => {
+    const item = document.createElement("div");
+    item.className = "message";
+    item.innerHTML = `
+      <b>${response.title}</b>
+      <p>${response.price}</p>
+      <p>Контакт: ${response.contact}</p>
+    `;
+    responsesList.appendChild(item);
+  });
 }
 
 function deleteJob(id) {
@@ -132,6 +164,71 @@ function resetFilters() {
   searchInput.value = "";
   categoryFilter.value = "Все";
   renderJobs();
+}
+
+function setRole(role) {
+  profile.role = role;
+  localStorage.setItem("worknow_profile", JSON.stringify(profile));
+  renderProfile();
+  showMessage("Роль выбрана: " + role);
+}
+
+function saveProfile() {
+  profile.name = document.getElementById("userName").value;
+  profile.phone = document.getElementById("userPhone").value;
+
+  localStorage.setItem("worknow_profile", JSON.stringify(profile));
+  renderProfile();
+
+  showMessage("✅ Профиль сохранён");
+}
+
+function renderProfile() {
+  document.getElementById("savedName").innerText = profile.name || "Не указано";
+  document.getElementById("savedPhone").innerText = profile.phone || "Не указан";
+  document.getElementById("savedRole").innerText = profile.role || "Не выбрана";
+  document.getElementById("roleBadge").innerText = profile.role
+    ? "Роль: " + profile.role
+    : "Роль не выбрана";
+}
+
+function sendMessage() {
+  const input = document.getElementById("chatInput");
+
+  if (!input.value) {
+    showMessage("Введите сообщение");
+    return;
+  }
+
+  messages.push({
+    text: input.value,
+    time: new Date().toLocaleTimeString()
+  });
+
+  localStorage.setItem("worknow_messages", JSON.stringify(messages));
+  input.value = "";
+
+  renderChat();
+}
+
+function renderChat() {
+  const chatBox = document.getElementById("chatBox");
+  chatBox.innerHTML = "";
+
+  if (messages.length === 0) {
+    chatBox.innerHTML = "<p>Сообщений пока нет.</p>";
+    return;
+  }
+
+  messages.forEach(message => {
+    const div = document.createElement("div");
+    div.className = "message";
+    div.innerHTML = `
+      <p>${message.text}</p>
+      <small>${message.time}</small>
+    `;
+    chatBox.appendChild(div);
+  });
 }
 
 function showMessage(text) {
@@ -157,3 +254,6 @@ function showMessage(text) {
 }
 
 renderJobs();
+renderResponses();
+renderProfile();
+renderChat();
