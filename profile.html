@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>WorkNow — профиль</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">W</div>
+    <div class="brand-text">Work<span>Now</span></div>
+  </div>
+
+  <nav class="menu">
+    <a href="index.html">Главная</a>
+    <a href="index.html#jobs">Задания</a>
+    <a href="index.html#post">Разместить</a>
+    <a href="profile.html">Профиль</a>
+  </nav>
+
+  <div id="roleBadge" class="city-badge">Профиль</div>
+</header>
+
+<main class="dashboard">
+  <section class="panel account" id="account">
+    <h2>Личный кабинет</h2>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('profileTab')">Профиль</button>
+      <button class="tab" onclick="showTab('responsesTab')">Мои отклики</button>
+    </div>
+
+    <div id="profileTab" class="tab-content active-content">
+      <input id="userName" placeholder="Ваше имя">
+      <input id="userCity" placeholder="Ваш город">
+      <input id="userPhone" placeholder="Телефон или Telegram">
+      <button onclick="saveProfile()">Сохранить профиль</button>
+
+      <p><b>Имя:</b> <span id="savedName">Не указано</span></p>
+      <p><b>Город:</b> <span id="savedCity">Не указан</span></p>
+      <p><b>Контакт:</b> <span id="savedPhone">Не указан</span></p>
+      <p><b>Роль:</b> <span id="savedRole">Не выбрана</span></p>
+    </div>
+
+    <div id="responsesTab" class="tab-content">
+      <div id="responsesList">
+        <p>Откликов пока нет.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <b>WorkNow</b>
+  <p>Работа сегодня. Деньги сегодня.</p>
+</footer>
+
+<script type="module" src="firebase.js"></script>
+<script src="script.js" defer></script>
+</body>
+</html>
