@@ -5,39 +5,7 @@ const searchInput = document.getElementById("searchInput");
 const cityFilter = document.getElementById("cityFilter");
 const categoryFilter = document.getElementById("categoryFilter");
 
-let jobs = JSON.parse(localStorage.getItem("worknow_jobs")) || [
-  {
-    id: 1,
-    title: "Помощь с переездом",
-    price: "5000 ₽",
-    city: "Москва",
-    district: "м. Сокол • Сегодня 18:00",
-    category: "Переезд",
-    contact: "+7 999 000-00-00",
-    description: "Нужно помочь перенести коробки. Работа примерно на 3 часа."
-  },
-  {
-    id: 2,
-    title: "Курьер на 2 часа",
-    price: "1800 ₽",
-    city: "Санкт-Петербург",
-    district: "Центр • Сегодня до 16:00",
-    category: "Курьер",
-    contact: "@worknow_test",
-    description: "Нужно отвезти документы по двум адресам."
-  },
-  {
-    id: 3,
-    title: "Разгрузить машину",
-    price: "3000 ₽",
-    city: "Алматы",
-    district: "Бостандыкский район • Завтра утром",
-    category: "Разгрузка",
-    contact: "@client_almaty",
-    description: "Нужен помощник для разгрузки товара."
-  }
-];
-
+let jobs = [];
 let responses = JSON.parse(localStorage.getItem("worknow_responses")) || [];
 let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
   name: "",
@@ -46,20 +14,44 @@ let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
   role: ""
 };
 
-button.addEventListener("click", () => {
+async function loadJobsFromFirebase() {
+  jobList.innerHTML = "<p>Загружаем задания...</p>";
+
+  try {
+    const querySnapshot = await window.getDocs(
+      window.collection(window.db, "jobs")
+    );
+
+    jobs = [];
+
+    querySnapshot.forEach((doc) => {
+      jobs.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+
+    renderJobs();
+  } catch (error) {
+    console.error(error);
+    jobList.innerHTML = "<p>Ошибка загрузки заданий из Firebase.</p>";
+  }
+}
+
+button.addEventListener("click", async () => {
   const inputs = form.querySelectorAll("input");
   const select = form.querySelector("select");
   const textarea = form.querySelector("textarea");
 
   const job = {
-    id: Date.now(),
     title: inputs[0].value,
     price: inputs[1].value,
     city: inputs[2].value,
     district: inputs[3].value,
     category: select.value,
     contact: inputs[4].value,
-    description: textarea.value
+    description: textarea.value,
+    createdAt: new Date().toISOString()
   };
 
   if (!job.title || !job.price || !job.city || !job.district || !job.contact) {
@@ -67,15 +59,19 @@ button.addEventListener("click", () => {
     return;
   }
 
-  jobs.unshift(job);
-  localStorage.setItem("worknow_jobs", JSON.stringify(jobs));
+  try {
+    await window.addDoc(window.collection(window.db, "jobs"), job);
 
-  inputs.forEach(input => input.value = "");
-  textarea.value = "";
-  select.selectedIndex = 0;
+    inputs.forEach(input => input.value = "");
+    textarea.value = "";
+    select.selectedIndex = 0;
 
-  renderJobs();
-  showMessage("✅ Задание опубликовано!");
+    showMessage("✅ Задание опубликовано!");
+    loadJobsFromFirebase();
+  } catch (error) {
+    console.error(error);
+    showMessage("Ошибка публикации задания");
+  }
 });
 
 searchInput.addEventListener("input", renderJobs);
@@ -91,12 +87,12 @@ function renderJobs() {
 
   const filteredJobs = jobs.filter(job => {
     const matchesSearch =
-      job.title.toLowerCase().includes(searchText) ||
-      job.district.toLowerCase().includes(searchText) ||
+      (job.title || "").toLowerCase().includes(searchText) ||
+      (job.district || "").toLowerCase().includes(searchText) ||
       (job.description || "").toLowerCase().includes(searchText);
 
     const matchesCity =
-      !cityText || job.city.toLowerCase().includes(cityText);
+      !cityText || (job.city || "").toLowerCase().includes(cityText);
 
     const matchesCategory =
       selectedCategory === "Все" || job.category === selectedCategory;
@@ -133,16 +129,16 @@ function createJobCard(job) {
     <div class="job-icon">${getCategoryIcon(job.category)}</div>
 
     <div>
-      <span class="tag">${job.category}</span>
-      <span class="city-tag">${job.city}</span>
-      <h3>${job.title}</h3>
+      <span class="tag">${job.category || "Задание"}</span>
+      <span class="city-tag">${job.city || "Город не указан"}</span>
+      <h3>${job.title || "Без названия"}</h3>
       <p class="description">${job.description || "Описание не указано."}</p>
-      <p>📍 ${job.district}</p>
+      <p>📍 ${job.district || "Район не указан"}</p>
     </div>
 
     <div class="job-side">
-      <b>${job.price}</b>
-      <button onclick="respondToJob(${job.id})">Откликнуться</button>
+      <b>${job.price || "Цена не указана"}</b>
+      <button onclick="respondToJob('${job.id}')">Откликнуться</button>
     </div>
   `;
 
@@ -262,6 +258,8 @@ function showMessage(text) {
   }, 3000);
 }
 
-renderJobs();
-renderResponses();
-renderProfile();
+setTimeout(() => {
+  loadJobsFromFirebase();
+  renderResponses();
+  renderProfile();
+}, 1000);
