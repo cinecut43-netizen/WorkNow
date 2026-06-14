@@ -378,3 +378,15 @@ footer {
     text-align: left;
   }
 }
+.logo-img{
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
