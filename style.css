@@ -24,17 +24,10 @@ body {
   gap: 12px;
 }
 
-.brand-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #0066ff, #39e75f);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 26px;
+.logo-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 
 .brand-text {
@@ -377,31 +370,4 @@ footer {
   .job-side {
     text-align: left;
   }
-}
-.logo-img{
-  width:60px;
-  height:60px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.hero-logo-img{
-  width:220px;
-  height:220px;
-  object-fit:contain;
-  margin-bottom:20px;
-}
-.logo-img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-}
-
-.hero-logo-img {
-  width: 300px;
-  height: 300px;
-  object-fit: contain;
 }
