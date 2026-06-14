@@ -6,7 +6,9 @@ import {
   getDocs,
   addDoc,
   deleteDoc,
-  doc
+  doc,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
@@ -39,10 +41,16 @@ window.getDocs = getDocs;
 window.addDoc = addDoc;
 window.deleteDoc = deleteDoc;
 window.doc = doc;
+window.query = query;
+window.where = where;
 
-window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+window.createUserWithEmailAndPassword =
+  createUserWithEmailAndPassword;
+
+window.signInWithEmailAndPassword =
+  signInWithEmailAndPassword;
+
 window.signOut = signOut;
 window.onAuthStateChanged = onAuthStateChanged;
 
-console.log("Firebase подключен");
+console.log("✅ Firebase подключен");
