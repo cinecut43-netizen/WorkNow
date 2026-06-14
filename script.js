@@ -33,11 +33,11 @@ setTimeout(() => {
       }
 
       renderMyJobs();
+      renderResponses();
     });
   }
 
   loadJobsFromFirebase();
-  renderResponses();
   renderProfile();
 }, 1000);
 
@@ -420,49 +420,6 @@ function renderMyJobs() {
   });
 }
 
-function showTab(tabId) {
-  const tabs = document.querySelectorAll(".tab-content");
-  const buttons = document.querySelectorAll(".tab");
-
-  tabs.forEach(tab => tab.classList.remove("active-content"));
-  buttons.forEach(button => button.classList.remove("active"));
-
-  const activeTab = document.getElementById(tabId);
-
-  if (activeTab) {
-    activeTab.classList.add("active-content");
-  }
-
-  if (tabId === "profileTab" && buttons[0]) {
-    buttons[0].classList.add("active");
-  }
-
-  if (tabId === "myJobsTab" && buttons[1]) {
-    buttons[1].classList.add("active");
-  }
-}
-
-function showMessage(text) {
-  const message = document.createElement("div");
-  message.innerText = text;
-
-  message.style.position = "fixed";
-  message.style.bottom = "20px";
-  message.style.right = "20px";
-  message.style.background = "#22c55e";
-  message.style.color = "white";
-  message.style.padding = "15px 20px";
-  message.style.borderRadius = "12px";
-  message.style.fontWeight = "bold";
-  message.style.boxShadow = "0 8px 25px rgba(0,0,0,0.2)";
-  message.style.zIndex = "9999";
-
-  document.body.appendChild(message);
-
-  setTimeout(() => {
-    message.remove();
-  }, 3000);
-}
 async function deleteMyJob(id) {
   if (!currentUser) {
     showMessage("Сначала войдите в аккаунт");
@@ -489,4 +446,52 @@ async function deleteMyJob(id) {
     console.error(error);
     showMessage("Ошибка удаления задания");
   }
+}
+
+function showTab(tabId) {
+  const tabs = document.querySelectorAll(".tab-content");
+  const buttons = document.querySelectorAll(".tab");
+
+  tabs.forEach(tab => tab.classList.remove("active-content"));
+  buttons.forEach(button => button.classList.remove("active"));
+
+  const activeTab = document.getElementById(tabId);
+
+  if (activeTab) {
+    activeTab.classList.add("active-content");
+  }
+
+  if (tabId === "profileTab" && buttons[0]) {
+    buttons[0].classList.add("active");
+  }
+
+  if (tabId === "myJobsTab" && buttons[1]) {
+    buttons[1].classList.add("active");
+  }
+
+  if (tabId === "responsesTab" && buttons[2]) {
+    buttons[2].classList.add("active");
+  }
+}
+
+function showMessage(text) {
+  const message = document.createElement("div");
+  message.innerText = text;
+
+  message.style.position = "fixed";
+  message.style.bottom = "20px";
+  message.style.right = "20px";
+  message.style.background = "#22c55e";
+  message.style.color = "white";
+  message.style.padding = "15px 20px";
+  message.style.borderRadius = "12px";
+  message.style.fontWeight = "bold";
+  message.style.boxShadow = "0 8px 25px rgba(0,0,0,0.2)";
+  message.style.zIndex = "9999";
+
+  document.body.appendChild(message);
+
+  setTimeout(() => {
+    message.remove();
+  }, 3000);
 }
