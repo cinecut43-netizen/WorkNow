@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>WorkNow — разместить задание</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">W</div>
+    <div class="brand-text">Work<span>Now</span></div>
+  </div>
+
+  <nav class="menu">
+    <a href="index.html">Главная</a>
+    <a href="jobs.html">Задания</a>
+    <a href="post.html">Разместить</a>
+    <a href="profile.html">Профиль</a>
+  </nav>
+
+  <div id="roleBadge" class="city-badge">Размещение</div>
+</header>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Разместите <span>задание</span></h1>
+    <p>
+      Опишите работу, укажите оплату и найдите исполнителя рядом с вами.
+    </p>
+  </div>
+</section>
+
+<main class="dashboard">
+
+  <section class="panel form" style="grid-column: span 2;">
+    <h2>Новое задание</h2>
+
+    <input placeholder="Что нужно сделать?">
+    <input placeholder="Оплата, например 3000 ₽">
+    <input placeholder="Город">
+    <input placeholder="Район или метро">
+
+    <select>
+      <option>Переезд</option>
+      <option>Разгрузка</option>
+      <option>Курьер</option>
+      <option>Сборка мебели</option>
+      <option>Уборка</option>
+      <option>Мероприятия</option>
+    </select>
+
+    <input placeholder="Контакт для связи">
+
+    <textarea placeholder="Подробное описание задания"></textarea>
+
+    <button>Опубликовать</button>
+  </section>
+
+</main>
+
+<footer>
+  <b>WorkNow</b>
+  <p>Работа сегодня. Деньги сегодня.</p>
+</footer>
+
+<script type="module" src="firebase.js"></script>
+<script src="script.js" defer></script>
+
+</body>
+</html>
