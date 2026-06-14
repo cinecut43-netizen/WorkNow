@@ -366,26 +366,31 @@ footer {
     text-align: left;
   }
 }
-/* Логотип в шапке */
+/* Логотип слева в шапке */
 .logo-img {
-  width: 56px;
-  height: 56px;
+  width: 55px;
+  height: 55px;
   object-fit: contain;
   display: block;
 }
 
-/* Бренд */
+/* Блок бренда */
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* Логотип справа */
+.brand-text {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+/* Большой логотип справа */
 .hero-logo-img {
-  width: 320px;
-  height: 320px;
+  width: 280px;
+  height: 280px;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
