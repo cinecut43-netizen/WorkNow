@@ -14,10 +14,11 @@
   </div>
 
   <nav class="menu">
-  <a href="index.html">Главная</a>
-  <a href="post.html">Разместить</a>
-  <a href="profile.html">Профиль</a>
-</nav>
+    <a href="index.html">Главная</a>
+    <a href="jobs.html">Задания</a>
+    <a href="post.html">Разместить</a>
+    <a href="profile.html">Профиль</a>
+  </nav>
 
   <div id="roleBadge" class="city-badge">Профиль</div>
 </header>
@@ -29,6 +30,7 @@
     <div class="tabs">
       <button class="tab active" onclick="showTab('profileTab')">Профиль</button>
       <button class="tab" onclick="showTab('myJobsTab')">Мои задания</button>
+      <button class="tab" onclick="showTab('responsesTab')">Мои отклики</button>
     </div>
 
     <div id="profileTab" class="tab-content active-content">
@@ -52,6 +54,12 @@
         <p>У вас пока нет заданий.</p>
       </div>
     </div>
+
+    <div id="responsesTab" class="tab-content">
+      <div id="responsesList">
+        <p>Откликов пока нет.</p>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -64,4 +72,3 @@
 <script src="script.js" defer></script>
 </body>
 </html>
-
