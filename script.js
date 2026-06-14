@@ -411,6 +411,9 @@ function renderMyJobs() {
       <b>${job.title}</b>
       <p>${job.price} • ${job.city}</p>
       <p>${job.description || "Описание не указано."}</p>
+      <button onclick="deleteMyJob('${job.id}')" style="background:#ef4444;">
+        Удалить
+      </button>
     `;
 
     myJobsList.appendChild(item);
@@ -459,4 +462,31 @@ function showMessage(text) {
   setTimeout(() => {
     message.remove();
   }, 3000);
+}
+async function deleteMyJob(id) {
+  if (!currentUser) {
+    showMessage("Сначала войдите в аккаунт");
+    return;
+  }
+
+  const job = jobs.find(item => item.id === id);
+
+  if (!job) {
+    showMessage("Задание не найдено");
+    return;
+  }
+
+  if (job.userId !== currentUser.uid) {
+    showMessage("Можно удалить только своё задание");
+    return;
+  }
+
+  try {
+    await window.deleteDoc(window.doc(window.db, "jobs", id));
+    showMessage("🗑️ Задание удалено");
+    loadJobsFromFirebase();
+  } catch (error) {
+    console.error(error);
+    showMessage("Ошибка удаления задания");
+  }
 }
