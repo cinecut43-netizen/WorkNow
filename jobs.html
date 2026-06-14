@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>WorkNow — Все задания</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">W</div>
+    <div class="brand-text">Work<span>Now</span></div>
+  </div>
+
+  <nav class="menu">
+    <a href="index.html">Главная</a>
+    <a href="jobs.html">Все задания</a>
+    <a href="post.html">Разместить</a>
+    <a href="profile.html">Профиль</a>
+  </nav>
+</header>
+
+<main class="dashboard">
+
+  <section class="panel jobs" style="grid-column: span 2;">
+    <h2>Все задания</h2>
+
+    <div class="filters">
+      <input id="searchInput" placeholder="Поиск задания...">
+      <input id="cityFilter" placeholder="Город">
+
+      <select id="categoryFilter">
+        <option value="Все">Все категории</option>
+        <option value="Переезд">Переезд</option>
+        <option value="Разгрузка">Разгрузка</option>
+        <option value="Курьер">Курьер</option>
+        <option value="Сборка мебели">Сборка мебели</option>
+        <option value="Уборка">Уборка</option>
+        <option value="Мероприятия">Мероприятия</option>
+      </select>
+    </div>
+
+    <div id="jobList"></div>
+
+  </section>
+
+</main>
+
+<script type="module" src="firebase.js"></script>
+<script src="script.js" defer></script>
+
+</body>
+</html>
