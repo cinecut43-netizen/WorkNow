@@ -394,3 +394,27 @@ footer {
   display: block;
   margin: 0 auto 20px;
 }
+.brand-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0066ff, #00c2ff, #39e75f);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-text {
+  font-size: 28px;
+  font-weight: 900;
+}
