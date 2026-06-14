@@ -236,7 +236,8 @@ function createJobCard(job) {
   jobList.appendChild(card);
 }
 
-function respondToJob(id) {
+async function respondToJob(id) {
+
   if (!currentUser) {
     showMessage("Сначала войдите в аккаунт");
     return;
@@ -249,18 +250,27 @@ function respondToJob(id) {
     return;
   }
 
-  responses.unshift({
-    id: Date.now(),
-    title: job.title,
-    price: job.price,
-    city: job.city,
-    contact: job.contact
-  });
+  try {
 
-  localStorage.setItem("worknow_responses", JSON.stringify(responses));
-  renderResponses();
+    await window.addDoc(
+      window.collection(window.db, "responses"),
+      {
+        jobId: job.id,
+        jobTitle: job.title,
+        ownerId: job.userId,
+        ownerEmail: job.userEmail,
+        applicantId: currentUser.uid,
+        applicantEmail: currentUser.email,
+        createdAt: new Date().toISOString()
+      }
+    );
 
-  showMessage("✅ Отклик отправлен. Контакт: " + job.contact);
+    showMessage("✅ Отклик отправлен");
+
+  } catch (error) {
+    console.error(error);
+    showMessage("Ошибка отправки отклика");
+  }
 }
 
 function renderResponses() {
