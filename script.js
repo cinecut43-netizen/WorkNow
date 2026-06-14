@@ -1,4 +1,4 @@
-const button = document.querySelector(".form button");
+const formButton = document.querySelector(".form button");
 const form = document.querySelector(".form");
 const jobList = document.getElementById("jobList");
 const searchInput = document.getElementById("searchInput");
@@ -8,6 +8,7 @@ const categoryFilter = document.getElementById("categoryFilter");
 let currentUser = null;
 let jobs = [];
 let responses = JSON.parse(localStorage.getItem("worknow_responses")) || [];
+
 let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
   name: "",
   city: "",
@@ -16,27 +17,24 @@ let profile = JSON.parse(localStorage.getItem("worknow_profile")) || {
 };
 
 setTimeout(() => {
-  window.onAuthStateChanged(window.auth, (user) => {
-  currentUser = user;
+  if (window.onAuthStateChanged) {
+    window.onAuthStateChanged(window.auth, (user) => {
+      currentUser = user;
 
-  const status = document.getElementById("authStatus");
-  const authBox = document.querySelector(".auth-box");
+      const status = document.getElementById("authStatus");
+      const authBox = document.querySelector(".auth-box");
 
-  if (user) {
-    status.innerText = user.email;
+      if (status) {
+        status.innerText = user ? user.email : "Не выполнен вход";
+      }
 
-    if (authBox) {
-      authBox.style.display = "none";
-    }
+      if (authBox) {
+        authBox.style.display = user ? "none" : "block";
+      }
 
-  } else {
-    status.innerText = "Не выполнен вход";
-
-    if (authBox) {
-      authBox.style.display = "block";
-    }
+      renderMyJobs();
+    });
   }
-});
 
   loadJobsFromFirebase();
   renderResponses();
@@ -44,8 +42,8 @@ setTimeout(() => {
 }, 1000);
 
 async function registerUser() {
-  const email = document.getElementById("authEmail").value;
-  const password = document.getElementById("authPassword").value;
+  const email = document.getElementById("authEmail")?.value;
+  const password = document.getElementById("authPassword")?.value;
 
   if (!email || !password) {
     showMessage("Введите email и пароль");
@@ -61,8 +59,8 @@ async function registerUser() {
 }
 
 async function loginUser() {
-  const email = document.getElementById("authEmail").value;
-  const password = document.getElementById("authPassword").value;
+  const email = document.getElementById("authEmail")?.value;
+  const password = document.getElementById("authPassword")?.value;
 
   if (!email || !password) {
     showMessage("Введите email и пароль");
@@ -87,7 +85,11 @@ async function logoutUser() {
 }
 
 async function loadJobsFromFirebase() {
-  jobList.innerHTML = "<p>Загружаем задания...</p>";
+  if (!jobList && !document.getElementById("myJobsList")) return;
+
+  if (jobList) {
+    jobList.innerHTML = "<p>Загружаем задания...</p>";
+  }
 
   try {
     const querySnapshot = await window.getDocs(
@@ -107,61 +109,68 @@ async function loadJobsFromFirebase() {
     renderMyJobs();
   } catch (error) {
     console.error(error);
-    jobList.innerHTML = "<p>Ошибка загрузки заданий из Firebase.</p>";
+
+    if (jobList) {
+      jobList.innerHTML = "<p>Ошибка загрузки заданий из Firebase.</p>";
+    }
   }
 }
 
-button.addEventListener("click", async () => {
-  if (!currentUser) {
-    showMessage("Сначала войдите в аккаунт");
-    return;
-  }
+if (formButton && form) {
+  formButton.addEventListener("click", async () => {
+    if (!currentUser) {
+      showMessage("Сначала войдите в аккаунт");
+      return;
+    }
 
-  const inputs = form.querySelectorAll("input");
-  const select = form.querySelector("select");
-  const textarea = form.querySelector("textarea");
+    const inputs = form.querySelectorAll("input");
+    const select = form.querySelector("select");
+    const textarea = form.querySelector("textarea");
 
-  const job = {
-    title: inputs[0].value,
-    price: inputs[1].value,
-    city: inputs[2].value,
-    district: inputs[3].value,
-    category: select.value,
-    contact: inputs[4].value,
-    description: textarea.value,
-    userEmail: currentUser.email,
-    userId: currentUser.uid,
-    createdAt: new Date().toISOString()
-  };
+    const job = {
+      title: inputs[0].value,
+      price: inputs[1].value,
+      city: inputs[2].value,
+      district: inputs[3].value,
+      category: select.value,
+      contact: inputs[4].value,
+      description: textarea.value,
+      userEmail: currentUser.email,
+      userId: currentUser.uid,
+      createdAt: new Date().toISOString()
+    };
 
-  if (!job.title || !job.price || !job.city || !job.district || !job.contact) {
-    showMessage("Заполни название, оплату, город, район и контакт");
-    return;
-  }
+    if (!job.title || !job.price || !job.city || !job.district || !job.contact) {
+      showMessage("Заполни название, оплату, город, район и контакт");
+      return;
+    }
 
-  try {
-    await window.addDoc(window.collection(window.db, "jobs"), job);
+    try {
+      await window.addDoc(window.collection(window.db, "jobs"), job);
 
-    inputs.forEach(input => input.value = "");
-    textarea.value = "";
-    select.selectedIndex = 0;
+      inputs.forEach(input => input.value = "");
+      textarea.value = "";
+      select.selectedIndex = 0;
 
-    showMessage("✅ Задание опубликовано!");
-    loadJobsFromFirebase();
-  } catch (error) {
-    console.error(error);
-    showMessage("Ошибка публикации задания");
-  }
-});
+      showMessage("✅ Задание опубликовано!");
+      loadJobsFromFirebase();
+    } catch (error) {
+      console.error(error);
+      showMessage("Ошибка публикации задания");
+    }
+  });
+}
 
-searchInput.addEventListener("input", renderJobs);
-cityFilter.addEventListener("input", renderJobs);
-categoryFilter.addEventListener("change", renderJobs);
+if (searchInput) searchInput.addEventListener("input", renderJobs);
+if (cityFilter) cityFilter.addEventListener("input", renderJobs);
+if (categoryFilter) categoryFilter.addEventListener("change", renderJobs);
 
 function renderJobs() {
-  const searchText = searchInput.value.toLowerCase();
-  const cityText = cityFilter.value.toLowerCase();
-  const selectedCategory = categoryFilter.value;
+  if (!jobList) return;
+
+  const searchText = searchInput ? searchInput.value.toLowerCase() : "";
+  const cityText = cityFilter ? cityFilter.value.toLowerCase() : "";
+  const selectedCategory = categoryFilter ? categoryFilter.value : "Все";
 
   jobList.innerHTML = "";
 
@@ -202,6 +211,8 @@ function getCategoryIcon(category) {
 }
 
 function createJobCard(job) {
+  if (!jobList) return;
+
   const card = document.createElement("div");
   card.className = "job";
 
@@ -233,6 +244,11 @@ function respondToJob(id) {
 
   const job = jobs.find(item => item.id === id);
 
+  if (!job) {
+    showMessage("Задание не найдено");
+    return;
+  }
+
   responses.unshift({
     id: Date.now(),
     title: job.title,
@@ -250,6 +266,8 @@ function respondToJob(id) {
 function renderResponses() {
   const responsesList = document.getElementById("responsesList");
 
+  if (!responsesList) return;
+
   if (responses.length === 0) {
     responsesList.innerHTML = "<p>Откликов пока нет.</p>";
     return;
@@ -260,19 +278,22 @@ function renderResponses() {
   responses.forEach(response => {
     const item = document.createElement("div");
     item.className = "message";
+
     item.innerHTML = `
       <b>${response.title}</b>
       <p>${response.price} • ${response.city}</p>
       <p>Контакт: ${response.contact}</p>
     `;
+
     responsesList.appendChild(item);
   });
 }
 
 function resetFilters() {
-  searchInput.value = "";
-  cityFilter.value = "";
-  categoryFilter.value = "Все";
+  if (searchInput) searchInput.value = "";
+  if (cityFilter) cityFilter.value = "";
+  if (categoryFilter) categoryFilter.value = "Все";
+
   renderJobs();
 }
 
@@ -284,87 +305,85 @@ function setRole(role) {
 }
 
 function saveProfile() {
-  profile.name = document.getElementById("userName").value;
-  profile.city = document.getElementById("userCity").value;
-  profile.phone = document.getElementById("userPhone").value;
+  const nameInput = document.getElementById("userName");
+  const cityInput = document.getElementById("userCity");
+  const phoneInput = document.getElementById("userPhone");
+
+  if (!nameInput || !cityInput || !phoneInput) return;
+
+  profile.name = nameInput.value;
+  profile.city = cityInput.value;
+  profile.phone = phoneInput.value;
 
   localStorage.setItem("worknow_profile", JSON.stringify(profile));
 
-  document.getElementById("userName").style.display = "none";
-  document.getElementById("userCity").style.display = "none";
-  document.getElementById("userPhone").style.display = "none";
-
-  document.getElementById("saveProfileBtn").style.display = "none";
-  document.getElementById("editProfileBtn").style.display = "inline-block";
-
   renderProfile();
+  hideProfileForm();
 
   showMessage("✅ Профиль сохранён");
 }
 
 function renderProfile() {
-  document.getElementById("savedName").innerText = profile.name || "Не указано";
-  document.getElementById("savedCity").innerText = profile.city || "Не указан";
-  document.getElementById("savedPhone").innerText = profile.phone || "Не указан";
-  document.getElementById("savedRole").innerText = profile.role || "Не выбрана";
+  const savedName = document.getElementById("savedName");
+  const savedCity = document.getElementById("savedCity");
+  const savedPhone = document.getElementById("savedPhone");
+  const savedRole = document.getElementById("savedRole");
+  const roleBadge = document.getElementById("roleBadge");
 
-  document.getElementById("roleBadge").innerText = profile.city
-    ? profile.city
-    : "Город не выбран";
-}
-if (profile.name) {
-  document.getElementById("userName").style.display = "none";
-  document.getElementById("userCity").style.display = "none";
-  document.getElementById("userPhone").style.display = "none";
+  if (savedName) savedName.innerText = profile.name || "Не указано";
+  if (savedCity) savedCity.innerText = profile.city || "Не указан";
+  if (savedPhone) savedPhone.innerText = profile.phone || "Не указан";
+  if (savedRole) savedRole.innerText = profile.role || "Не выбрана";
 
-  document.getElementById("saveProfileBtn").style.display = "none";
-  document.getElementById("editProfileBtn").style.display = "inline-block";
-}
-function showTab(tabId) {
-  const tabs = document.querySelectorAll(".tab-content");
-  const buttons = document.querySelectorAll(".tab");
+  if (roleBadge) {
+    roleBadge.innerText = profile.city ? profile.city : "Город не выбран";
+  }
 
-  tabs.forEach(tab => tab.classList.remove("active-content"));
-  buttons.forEach(button => button.classList.remove("active"));
-
-  document.getElementById(tabId).classList.add("active-content");
-
-  if (tabId === "profileTab") {
-    buttons[0].classList.add("active");
-  } else {
-    buttons[1].classList.add("active");
+  if (profile.name) {
+    hideProfileForm();
   }
 }
 
-function showMessage(text) {
-  const message = document.createElement("div");
-  message.innerText = text;
+function hideProfileForm() {
+  const userName = document.getElementById("userName");
+  const userCity = document.getElementById("userCity");
+  const userPhone = document.getElementById("userPhone");
+  const saveBtn = document.getElementById("saveProfileBtn");
+  const editBtn = document.getElementById("editProfileBtn");
 
-  message.style.position = "fixed";
-  message.style.bottom = "20px";
-  message.style.right = "20px";
-  message.style.background = "#22c55e";
-  message.style.color = "white";
-  message.style.padding = "15px 20px";
-  message.style.borderRadius = "12px";
-  message.style.fontWeight = "bold";
-  message.style.boxShadow = "0 8px 25px rgba(0,0,0,0.2)";
-  message.style.zIndex = "9999";
-
-  document.body.appendChild(message);
-
-  setTimeout(() => {
-    message.remove();
-  }, 3000);
+  if (userName) userName.style.display = "none";
+  if (userCity) userCity.style.display = "none";
+  if (userPhone) userPhone.style.display = "none";
+  if (saveBtn) saveBtn.style.display = "none";
+  if (editBtn) editBtn.style.display = "inline-block";
 }
+
 function editProfile() {
-  document.getElementById("userName").style.display = "block";
-  document.getElementById("userCity").style.display = "block";
-  document.getElementById("userPhone").style.display = "block";
+  const userName = document.getElementById("userName");
+  const userCity = document.getElementById("userCity");
+  const userPhone = document.getElementById("userPhone");
+  const saveBtn = document.getElementById("saveProfileBtn");
+  const editBtn = document.getElementById("editProfileBtn");
 
-  document.getElementById("saveProfileBtn").style.display = "inline-block";
-  document.getElementById("editProfileBtn").style.display = "none";
+  if (userName) {
+    userName.style.display = "block";
+    userName.value = profile.name || "";
+  }
+
+  if (userCity) {
+    userCity.style.display = "block";
+    userCity.value = profile.city || "";
+  }
+
+  if (userPhone) {
+    userPhone.style.display = "block";
+    userPhone.value = profile.phone || "";
+  }
+
+  if (saveBtn) saveBtn.style.display = "inline-block";
+  if (editBtn) editBtn.style.display = "none";
 }
+
 function renderMyJobs() {
   const myJobsList = document.getElementById("myJobsList");
 
@@ -397,17 +416,13 @@ function renderMyJobs() {
     myJobsList.appendChild(item);
   });
 }
+
 function showTab(tabId) {
   const tabs = document.querySelectorAll(".tab-content");
   const buttons = document.querySelectorAll(".tab");
 
-  tabs.forEach(tab => {
-    tab.classList.remove("active-content");
-  });
-
-  buttons.forEach(button => {
-    button.classList.remove("active");
-  });
+  tabs.forEach(tab => tab.classList.remove("active-content"));
+  buttons.forEach(button => button.classList.remove("active"));
 
   const activeTab = document.getElementById(tabId);
 
@@ -419,11 +434,29 @@ function showTab(tabId) {
     buttons[0].classList.add("active");
   }
 
-  if (tabId === "responsesTab" && buttons[1]) {
+  if (tabId === "myJobsTab" && buttons[1]) {
     buttons[1].classList.add("active");
   }
+}
 
-  if (tabId === "myJobsTab" && buttons[2]) {
-    buttons[2].classList.add("active");
-  }
+function showMessage(text) {
+  const message = document.createElement("div");
+  message.innerText = text;
+
+  message.style.position = "fixed";
+  message.style.bottom = "20px";
+  message.style.right = "20px";
+  message.style.background = "#22c55e";
+  message.style.color = "white";
+  message.style.padding = "15px 20px";
+  message.style.borderRadius = "12px";
+  message.style.fontWeight = "bold";
+  message.style.boxShadow = "0 8px 25px rgba(0,0,0,0.2)";
+  message.style.zIndex = "9999";
+
+  document.body.appendChild(message);
+
+  setTimeout(() => {
+    message.remove();
+  }, 3000);
 }
